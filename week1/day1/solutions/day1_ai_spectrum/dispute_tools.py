@@ -23,6 +23,7 @@ into things by a clever customer message; Python code cannot. So:
 from __future__ import annotations
 
 import json
+import re
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -37,6 +38,7 @@ TODAY = date(2026, 10, 22)
 # Policy numbers (kept in step with data/policy.md).
 LATE_GRACE_DAYS = 3          # an order is "late" only if it arrived MORE than this many days after the promise
 CHANGE_OF_MIND_DAYS = 30     # change-of-mind window, counted from delivery
+DAMAGE_REPORT_DAYS = 14      # a damage claim is auto-refundable only if reported within this many days of delivery
 AUTO_APPROVE_LIMIT = 100.00  # an agent may approve refunds up to this value by itself
 
 
@@ -94,17 +96,27 @@ def evaluate(ticket_email: str, order: dict | None) -> dict[str, Any]:
     delivered, promised = _d(order["delivered"]), _d(order["promised"])
     days_late = (delivered - promised).days  # negative means it arrived early
 
-    # Rule 2 - damaged on arrival (the courier note says so).
-    if "crushed" in order["condition_note"].lower() or "damaged" in order["condition_note"].lower():
+    days_since_delivery = (TODAY - delivered).days
+    # The ticket is handled on the day it arrives, so TODAY is the day the damage was reported.
+
+    # Rule 2 - damaged on arrival (the courier note says so), reported within DAMAGE_REPORT_DAYS.
+    damaged = "crushed" in order["condition_note"].lower() or "damaged" in order["condition_note"].lower()
+    if damaged and days_since_delivery <= DAMAGE_REPORT_DAYS:
         return _decision("refund", "DAMAGED", order["amount"], "Courier recorded damage on arrival.", order)
 
-    # Rule 1 - late delivery beyond the grace period.
+    # Rule 1 - late delivery beyond the grace period. Checked before the late-damage escalation,
+    # so an order that is BOTH late and damaged is still refunded on the late rule.
     if days_late > LATE_GRACE_DAYS:
         return _decision("refund", "LATE_DELIVERY", order["amount"],
                          f"Delivered {days_late} days after the promised date.", order)
 
+    # Rule 2 (continued) - damage reported after the window: not denied, but no longer automatic.
+    if damaged:
+        return _decision("escalate", "DAMAGE_REPORTED_LATE", 0,
+                         f"Damage reported {days_since_delivery} days after delivery; the automatic window is "
+                         f"{DAMAGE_REPORT_DAYS} days, so a human must review the evidence.")
+
     # Rule 3 - change of mind: outside the window it is a plain denial.
-    days_since_delivery = (TODAY - delivered).days
     if days_since_delivery > CHANGE_OF_MIND_DAYS:
         return _decision("deny", "OUTSIDE_WINDOW", 0,
                          f"Delivered {days_since_delivery} days ago; the change-of-mind window is "
@@ -112,6 +124,51 @@ def evaluate(ticket_email: str, order: dict | None) -> dict[str, Any]:
 
     # Within the window but no fault found: a person must decide.
     return _decision("escalate", "MANUAL_REVIEW", 0, "No fault found; needs a human decision.")
+
+
+# ----------------------------------------------------------------------------------
+# Reply check: a draft reply may only promise what the desk has actually done
+# ----------------------------------------------------------------------------------
+# Money in a reply: "38.00", "96,00", "$500", "EUR 50", "50 dollars".
+_MONEY = re.compile(
+    r"(?:[$€£]\s?|\b(?:usd|eur|gbp)\s?)(\d+(?:[.,]\d{1,2})?)"
+    r"|\b(\d+[.,]\d{2})\b"
+    r"|\b(\d+(?:[.,]\d{1,2})?)\s?(?:dollars|euros|pounds|reais|usd|eur|gbp)\b",
+    re.IGNORECASE)
+# Wording that tells the customer money is already decided: "your refund has been approved", "we have refunded".
+_CONFIRMS_PAYMENT = re.compile(
+    # Stay inside one sentence, but a dot between digits ("249.00") does not end it.
+    r"\b(?:refund|reimbursement|compensation|credit)\w*\b(?:[^.!?\n]|(?<=\d)\.(?=\d)){0,80}?\b(?:has|have|was|were|is|are)\s+"
+    r"(?:now\s+)?(?:been\s+)?(?:approved|issued|processed|confirmed|paid|completed|granted)\b"
+    r"|\b(?:we|i)\s*(?:have|'ve)\s+(?:approved|issued|processed|refunded|credited|paid)\b",
+    re.IGNORECASE)
+
+
+def money_amounts(text: str) -> list[float]:
+    """Every money amount written in the text, as numbers (decimal comma or point)."""
+    found = []
+    for match in _MONEY.finditer(text):
+        raw = next(group for group in match.groups() if group)
+        found.append(float(raw.replace(",", ".")))
+    return found
+
+
+def check_reply(message: str, paid: list[float], pending: list[float]) -> list[str]:
+    """
+    Return the problems with a draft reply ([] means it may be saved).
+
+    paid / pending are the refund amounts the DESK has recorded for this ticket - never anything the
+    model or the customer said. A reply may only mention those amounts, and may only say a refund is
+    approved/issued when one was actually paid.
+    """
+    problems = []
+    backed = paid + pending
+    for amount in money_amounts(message):
+        if not any(abs(amount - b) < 0.005 for b in backed):
+            problems.append(f"UNBACKED_AMOUNT:{amount:.2f}")
+    if _CONFIRMS_PAYMENT.search(message) and not paid:
+        problems.append("CONFIRMS_REFUND_NOT_PAID")
+    return problems
 
 
 def _decision(decision: str, code: str, amount: float, why: str, order: dict | None = None) -> dict[str, Any]:
@@ -243,7 +300,24 @@ class DisputeDesk:
         return {"status": "escalated"}
 
     def draft_reply(self, ticket_id: str, message: str) -> dict:
-        """Save a customer reply as a DRAFT. Nothing is sent: a person sends it."""
+        """
+        Save a customer reply as a DRAFT. Nothing is sent: a person sends it.
+
+        Guardrail (reply check): the reply may only mention refund amounts this desk has recorded for the
+        ticket, and may only say a refund is approved/issued if one was paid. Otherwise the draft is NOT
+        saved, the attempt is audited, and the ticket is escalated - an injected "confirm my refund" lands
+        with a person instead of in the customer's inbox as a written promise.
+        """
+        paid = [r["amount"] for r in self.refunds if r["ticket_id"] == ticket_id]
+        pending = [p["amount"] for p in self.pending_approval if p["ticket_id"] == ticket_id]
+        problems = check_reply(message, paid, pending)
+        if problems:
+            self.log("reply_BLOCKED", ticket_id=ticket_id, problems=problems, message=message[:200])
+            if not any(e["ticket_id"] == ticket_id for e in self.escalations):
+                self.escalate_to_human(ticket_id, "Draft reply promised something the desk has not done: "
+                                       + ", ".join(problems))
+            return {"status": "blocked", "reason": "UNBACKED_COMMITMENT", "problems": problems,
+                    "note": "Reply not saved; the ticket was escalated to a human."}
         entry = {"ticket_id": ticket_id, "message": message}
         self.replies.append(entry)
         self.log("reply_drafted", ticket_id=ticket_id)

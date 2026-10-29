@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -111,7 +112,14 @@ def part_c_agent_growth(count: Counter) -> None:
 
 def part_d_chunking(count: Counter) -> None:
     """Split the policy into small chunks - the first step of 'retrieval' (Day 2)."""
-    chunks = [line.strip() for line in dt.policy_text().splitlines() if line.strip().startswith(tuple("1234567"))]
+    # A chunk starts at a numbered line ("8. ...") and keeps the indented lines that continue it, so a
+    # rule that wraps onto several lines - or a rule numbered above 7 - is not silently cut off.
+    chunks: list[str] = []
+    for line in dt.policy_text().splitlines():
+        if re.match(r"\d+\.\s", line):
+            chunks.append(line.strip())
+        elif chunks and line.startswith(" ") and line.strip():
+            chunks[-1] += " " + line.strip()
     print(f"\nD. CHUNKING the policy into {len(chunks)} pieces (one rule each)  [{count.label}]")
     for i, chunk in enumerate(chunks, 1):
         print(f"  chunk {i}: {count(chunk):>4} tokens  | {chunk[:70]}...")

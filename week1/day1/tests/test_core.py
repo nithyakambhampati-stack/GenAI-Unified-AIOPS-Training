@@ -25,7 +25,7 @@ class PolicyTests(unittest.TestCase):
         self.assertEqual((d["decision"], d["reason_code"], d["amount"], d["needs_human"]), ("refund", "LATE_DELIVERY", 79.0, False))
 
     def test_damaged_refund(self):
-        self.assertEqual(self.decide("T-02")["reason_code"], "DAMAGED")
+        self.assertEqual(self.decide("T-09")["reason_code"], "DAMAGED")   # reported on day 14: still inside the window
 
     def test_large_refund_needs_human(self):
         self.assertTrue(self.decide("T-03")["needs_human"])
@@ -78,7 +78,7 @@ class GuardrailTests(unittest.TestCase):
 
     def test_budget_cap(self):
         self.desk.issue_refund("T-01", "ORD-1001", 79.0, "late")      # leaves 21.00
-        r = self.desk.issue_refund("T-02", "ORD-1002", 45.5, "damaged")
+        r = self.desk.issue_refund("T-09", "ORD-1009", 27.0, "damaged")   # T-02 is no longer refundable (rule 2 window)
         self.assertEqual(r["reason"], "BUDGET_EXCEEDED")
 
     def test_audit_records_blocked_attempts(self):

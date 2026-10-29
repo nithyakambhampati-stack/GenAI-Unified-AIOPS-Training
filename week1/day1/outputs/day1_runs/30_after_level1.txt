@@ -1,0 +1,39 @@
+LEVEL 1 - traditional automation (keyword rules + policy code)
+
+T-01: refund -> refunded
+T-02: policy says escalate
+T-03: refund -> pending_human_approval
+T-04: policy says deny -> reply
+T-05: policy says status_update -> reply
+T-06: policy says escalate
+T-07: policy says escalate
+T-08: no refund keyword -> canned reply
+T-09: refund -> refunded
+T-10: policy says escalate
+T-11: no refund keyword -> canned reply
+
+ticket  expected          actual            match
+--------------------------------------------------
+T-01    refunded          refunded          yes
+T-02    escalated         escalated         yes
+T-03    pending_approval  pending_approval  yes
+T-04    reply             reply             yes
+T-05    reply             reply             yes
+T-06    escalated         escalated         yes
+T-07    escalated         escalated         yes
+T-08    pending_approval  reply             NO  <-- look here
+T-09    refunded          refunded          yes
+T-10    escalated         escalated         yes
+T-11    escalated         reply             NO  <-- look here
+--------------------------------------------------
+9/11 tickets handled as the policy expects
+Refunds paid: 106.00   waiting for human approval: 420.00
+
+BRITTLENESS DEMO - same intent, words the rule-writer did not expect:
+  intent=other           order=ORD-1002  <- The mug in ORD-1002 arrived in pieces. I'd like to be reimbursed.
+  intent=other           order=ORD-1001  <- Bestellung ORD-1001 kam viel zu spat an. Bitte Geld zuruck.
+  intent=other           order=ORD-1003  <- my order ord-1003 is 12 days late!!! credit my card
+
+Takeaway: every paraphrase is a bug waiting to happen. Level 2 fixes this with a language model.
+
+WALL_TIME_S=0.2

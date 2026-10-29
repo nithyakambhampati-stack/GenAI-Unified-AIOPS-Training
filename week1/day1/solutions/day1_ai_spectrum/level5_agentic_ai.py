@@ -71,10 +71,10 @@ def main() -> None:
     print("Escalated to humans:")
     for item in desk.escalations:
         print(f"  {item['ticket_id']}: {item['reason'][:90]}")
-    blocked = [r for r in desk.audit if r["action"] == "refund_BLOCKED"]
+    blocked = [r for r in desk.audit if r["action"] in ("refund_BLOCKED", "reply_BLOCKED")]
     print(f"Guardrail blocks: {len(blocked)}")
     for rec in blocked:
-        print(f"  {rec['ticket_id']} {rec['why']}")
+        print(f"  {rec['ticket_id']} {rec.get('why') or rec.get('problems')}")
 
     path = desk.save_audit("level5_audit.jsonl")
     print(f"\nFull audit trail: {path}")

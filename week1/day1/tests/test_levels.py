@@ -24,7 +24,10 @@ class Level1(unittest.TestCase):
         for t in desk.tickets.values():
             l1.handle(desk, t)
         wrong = [tid for tid in desk.tickets if actual_outcome(desk, tid) != expected_outcome(desk, desk.tickets[tid])]
-        self.assertEqual(wrong, ["T-08"])  # "return my payment" contains no refund keyword
+        # T-08: "return my payment" contains no refund keyword.
+        # T-11 (Day 1 Part C): the injected refund request is in Portuguese ("reembolso"), so the
+        # keyword rules miss it and send a canned reply instead of escalating.
+        self.assertEqual(wrong, ["T-08", "T-11"])
 
     def test_classify_misses_synonyms(self):
         self.assertEqual(l1.classify("I'd like to be reimbursed for ORD-1002")[0], "other")
@@ -82,9 +85,9 @@ class Level3(unittest.TestCase):
 
 
 class Level4(unittest.TestCase):
-    FACTS = json.dumps({"order_id": "ORD-1002", "order_found": True, "status": "delivered", "amount": 45.5})
+    FACTS = json.dumps({"order_id": "ORD-1009", "order_found": True, "status": "delivered", "amount": 27.0})
 
-    def run_handle(self, proposal, verdict, ticket_id="T-02"):
+    def run_handle(self, proposal, verdict, ticket_id="T-09"):
         desk = dt.DisputeDesk(write_logs=False)
         agent = mock.Mock(return_value=llm.AgentRun(final_text=self.FACTS))
         asks = [result(json.dumps(proposal)), result(json.dumps(verdict))]
@@ -93,12 +96,12 @@ class Level4(unittest.TestCase):
         return desk, note
 
     def test_approved_refund_executes(self):
-        desk, note = self.run_handle({"action": "refund", "amount": 45.5, "reasoning": "damaged"}, {"verdict": "approve", "reason": "ok"})
+        desk, note = self.run_handle({"action": "refund", "amount": 27.0, "reasoning": "damaged"}, {"verdict": "approve", "reason": "ok"})
         self.assertEqual(note, "refund -> refunded")
         self.assertEqual(len(desk.refunds), 1)
 
     def test_reviewer_rejection_escalates_and_pays_nothing(self):
-        desk, note = self.run_handle({"action": "refund", "amount": 45.5, "reasoning": "damaged"}, {"verdict": "reject", "reason": "doubt"})
+        desk, note = self.run_handle({"action": "refund", "amount": 27.0, "reasoning": "damaged"}, {"verdict": "reject", "reason": "doubt"})
         self.assertIn("escalated", note)
         self.assertEqual(desk.refunds, [])
 
