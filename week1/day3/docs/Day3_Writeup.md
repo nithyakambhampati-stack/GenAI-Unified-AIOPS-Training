@@ -9,7 +9,7 @@
 | Task B - `nearest()`, tests, prompt log, 4/4 PASS | Yes | `my_vector_math.py`, `test_mine.py` (14 OK), `docs/TaskB_prompt_log.md` |
 | Task C - own scenario (Scenario 5, Legacy modernization copilot) | Yes | `data/my_scenario.json`, `outputs/taskC_scenario_matrix.txt`, section C |
 | Task D - decision table | Yes | Section D |
-| Task E - misleading score + own explanation | Yes | Section E, `day3_extras.py`, `outputs/taskE_and_stretch.txt` |
+| Task E - misleading score + own explanation | Yes | Section E, `day3_extras.py`, `outputs/day3_extras_output.txt` |
 | Stretch tasks (all three) | Yes | Section F |
 | All data synthetic, no keys, nothing sensitive | Yes | No `.env`, no real names, accounts or jobs |
 
@@ -120,7 +120,7 @@ their arrows almost overlap, and in practice they are the jobs a team would look
 as good as the themes the numbers capture: anything the dimensions leave out (like "retire" versus "keep") is
 invisible to it.
 
-## F. Stretch tasks (`outputs/taskE_and_stretch.txt`)
+## F. Stretch tasks (`outputs/day3_extras_output.txt`)
 
 1. **Unit-vector identity:** COBOL batch posting vs Monthly report extract: cosine 0.816982; distance² of the unit
    vectors 0.366035; 2 - 2 × cosine 0.366035. Same number, so on unit-length vectors ranking by cosine and by
