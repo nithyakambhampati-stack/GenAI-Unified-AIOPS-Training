@@ -1,0 +1,12 @@
+// Propose - verify - decide - log (Day 2 verify_outputs.py).
+digraph G {
+  rankdir=LR; fontname="Inter"; nodesep=0.35; ranksep=0.5; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.16,0.1"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+  p [label="1 PROPOSE\nmodel extracts figures\n+ word-for-word quotes", fillcolor="#EDE9FE", color="#6D28D9"];
+  v [label="2 VERIFY (code)\nquote exists in source?\nnumber inside quote?\nrecalculation matches?", fillcolor="#FEE2E2", color="#B91C1C"];
+  t [label="3 TIER\nLOW - MEDIUM - HIGH", fillcolor="#FEF9C3"];
+  h [label="4 HUMAN DECIDES\nanything above LOW", fillcolor="#DCFCE7"];
+  l [label="5 LOG\nJSON Lines audit trail", fillcolor="#FEF3C7"];
+  p -> v -> t -> h -> l;
+}

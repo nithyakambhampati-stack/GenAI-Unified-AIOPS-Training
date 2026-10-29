@@ -1,0 +1,14 @@
+# GenAIOps Enablement - Module 1 lab: core dependencies
+# Install with:  pip install -r requirements.txt
+# Python 3.11 or newer is required.
+
+# --- LLM access -------------------------------------------------------------
+anthropic            # Official Anthropic Python SDK (Messages API, tool use, token counting)
+python-dotenv        # Loads the API key and model IDs from the .env file
+
+# --- Numerics and plotting (Day 2 embeddings demo) ---------------------------
+numpy                # Vector maths (dot products, norms)
+scikit-learn         # PCA: squeezes high-dimensional vectors into 2-D for the "map of meaning"
+matplotlib           # Draws the map of meaning and saves it as a PNG
+
+# Optional (real semantic embeddings for Day 2) - see requirements-embeddings.txt

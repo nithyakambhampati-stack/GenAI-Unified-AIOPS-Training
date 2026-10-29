@@ -1,0 +1,18 @@
+[
+  {"topic": "refunds",  "text": "I would like my money returned because the item arrived broken."},
+  {"topic": "refunds",  "text": "Please reimburse the full purchase price to my card."},
+  {"topic": "refunds",  "text": "The invoice was charged twice, so I need a payment reversed."},
+  {"topic": "refunds",  "text": "Credit the amount back to my account for the faulty product."},
+  {"topic": "delivery", "text": "My parcel has not arrived and the tracking page shows no update."},
+  {"topic": "delivery", "text": "The courier left the package at the wrong address."},
+  {"topic": "delivery", "text": "Shipment is two weeks late compared with the promised date."},
+  {"topic": "delivery", "text": "When will my order be dispatched from the warehouse?"},
+  {"topic": "it_access", "text": "I forgot my password and cannot sign in to the portal."},
+  {"topic": "it_access", "text": "My account is locked after too many login attempts."},
+  {"topic": "it_access", "text": "Please grant me access to the shared project folder."},
+  {"topic": "it_access", "text": "The two-factor code is not working on my new phone."},
+  {"topic": "hr_leave", "text": "How many days of annual leave do I get each year?"},
+  {"topic": "hr_leave", "text": "I need to book a holiday for the first week of December."},
+  {"topic": "hr_leave", "text": "What is the process to report a sick day to my manager?"},
+  {"topic": "hr_leave", "text": "Can I carry unused vacation days into next year?"}
+]

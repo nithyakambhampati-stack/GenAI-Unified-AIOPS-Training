@@ -1,0 +1,15 @@
+digraph G {
+  rankdir=LR; fontname="Inter"; nodesep=0.3; ranksep=0.4; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.16,0.1"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+  s0 [label="STEP 0\nWorked example\nvector_math.py\nloan mortgage", fillcolor="#E0F2FE"];
+  s1 [label="STEP 1\nBy hand, on paper\nstep1_by_hand_check.py\n(type answers, get feedback)", fillcolor="#DCFCE7"];
+  s2 [label="STEP 2\nClaude Code writes\nmy_vector_math.py\n(prompts provided)", fillcolor="#EDE9FE", color="#6D28D9"];
+  s3 [label="STEP 3\nYou CHECK it\nstep3_check_my_code.py\nvs the answer key", fillcolor="#FEE2E2", color="#B91C1C"];
+  s4 [label="STEP 4\nWhy does it work?\nstep4_why_cosine.py\n4 experiments", fillcolor="#FEF9C3", color="#A16207"];
+  key [label="Answer key\nvector_math.py", shape=note, fillcolor="#FEF3C7"];
+  data [label="data/vectors.json\n(toy, synthetic)", shape=note, fillcolor="#FEF3C7"];
+  s0 -> s1 -> s2 -> s3 -> s4;
+  key -> s0 [style=dashed]; key -> s3 [style=dashed]; data -> s1 [style=dashed]; data -> s4 [style=dashed];
+  s3 -> s2 [label="FAIL: fix and retry", style=dotted, constraint=false];
+}

@@ -1,0 +1,12 @@
+{
+  "_note": "EXAMPLE only (synthetic). Copy to data/my_scenario.json and replace with items from YOUR chosen scenario. Numbers 0-5 say how strongly each item relates to each dimension.",
+  "dimensions": ["identity_proof", "address_proof", "income_proof", "data_quality_issue"],
+  "items": {
+    "Passport scan":              [5, 1, 0, 1],
+    "National ID card":           [5, 1, 0, 1],
+    "Utility bill":               [1, 5, 0, 1],
+    "Bank statement":             [1, 3, 4, 1],
+    "Salary slip":                [0, 1, 5, 1],
+    "Blurred ID with typo":       [4, 1, 0, 5]
+  }
+}

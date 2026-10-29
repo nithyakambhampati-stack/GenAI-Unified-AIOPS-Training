@@ -1,0 +1,27 @@
+// Overall lab architecture: who talks to whom.
+digraph G {
+  rankdir=LR; fontname="Inter"; nodesep=0.35; ranksep=0.7; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.14,0.08"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+
+  subgraph cluster_vm { label="Shared lab VM (one per participant)"; labeljust=l; fontname="Inter"; fontsize=12; style="rounded"; color="#94A3B8";
+    vscode [label="VS Code\n(editor + terminal)", fillcolor="#E0F2FE"];
+    env    [label=".env\nANTHROPIC_API_KEY\nmodel IDs, limits", fillcolor="#FEF3C7"];
+    cfg    [label="common/config.py\nreads .env, holds settings"];
+    llm    [label="common/llm.py\nask() - agent loop\ncount_tokens() - extract_json()"];
+    d1     [label="solutions/day1_ai_spectrum\nlevels 1-5 + dispute_tools\ncontext_and_tokens", fillcolor="#DCFCE7"];
+    d2     [label="solutions/day2_models_and_embeddings\ncompare_tiers_cli - verify_outputs\nembeddings_map - redact_pii - homework_pack", fillcolor="#DCFCE7"];
+    cli    [label="Claude Code CLI\nclaude -p --model ...", fillcolor="#E0F2FE"];
+    emb    [label="fastembed model\n(local, optional)"];
+    data   [label="data/ (synthetic)\norders - tickets - policy\nclauses - sentences"];
+    out    [label="outputs/\nreports - charts - audit logs", fillcolor="#FEF3C7"];
+  }
+  api [label="Anthropic API\nOpus - Sonnet - Haiku", shape=box, style="rounded,filled", fillcolor="#EDE9FE", color="#6D28D9"];
+
+  vscode -> d1 [label="python ..."]; vscode -> d2 [label="python ..."]; vscode -> cli [label="terminal"];
+  d1 -> llm; d2 -> llm; llm -> cfg; cfg -> env [label="loads"];
+  llm -> api [label="Anthropic SDK\n(HTTPS)"];
+  d2 -> cli [label="subprocess\n(key via environment)"]; cli -> api [label="HTTPS"];
+  d2 -> emb [label="embeds locally"]; d1 -> data [label="reads"]; d2 -> data [label="reads"];
+  d1 -> out [label="writes"]; d2 -> out [label="writes"];
+}

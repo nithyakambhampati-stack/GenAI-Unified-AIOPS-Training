@@ -1,0 +1,18 @@
+{
+  "primary": {
+    "id": "Q1",
+    "title": "Contract clause analysis (reasoning + arithmetic + careful reading)",
+    "prompt_template": "You are helping a procurement analyst. Using ONLY the clauses below, answer:\n1. In one month availability was 98.6%. What service credit is owed in money? Show the calculation.\n2. The Customer terminates after 8 months. What is the early-termination charge in money?\n3. Can the Supplier process customer data in India without asking? Quote the clause.\nKeep the answer under 150 words.\n\n<clauses>\n{document}\n</clauses>",
+    "document_file": "vendor_clause.txt",
+    "expected_facts": [
+      "Q1: 99.5 - 98.6 = 0.9 points -> 1 full 0.5-point step -> 5% of 12,400.00 = 620.00",
+      "Q2: two months' fees = 24,800.00 (terminated within first 12 months)",
+      "Q3: No - clause 11.4 requires prior written consent for processing outside the EEA"
+    ],
+    "check_numbers": ["620", "24,800"]
+  },
+  "extra": [
+    {"id": "Q2", "title": "Short summarisation", "prompt_template": "Summarise in two sentences for an executive: {document}", "document_file": "vendor_clause.txt"},
+    {"id": "Q3", "title": "Judgement", "prompt_template": "A colleague pastes a customer's full name, phone number and order history into a free personal chatbot account to 'save time'. List three risks and one safer alternative. Max 80 words.", "document_file": null}
+  ]
+}

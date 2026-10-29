@@ -1,0 +1,12 @@
+digraph G {
+  rankdir=LR; fontname="Inter"; nodesep=0.3; ranksep=0.45; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.16,0.1"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+  t [label="Text\n\"Mortgage application\nis missing KYC documents\"", fillcolor="#E0F2FE"];
+  e [label="Embedding model\n(learned beforehand)", fillcolor="#EDE9FE", color="#6D28D9"];
+  v [label="Vector\n[3, 0, 5, 1, ...]\nlist of numbers = a point in space", fillcolor="#DCFCE7"];
+  m [label="The mathematics (this lab)\ndot product - length\ncosine similarity - Euclidean distance", fillcolor="#FEF9C3", color="#A16207"];
+  s [label="Score\ne.g. cosine = 0.97", fillcolor="#FFEDD5"];
+  d [label="Decision\nrank - threshold - 'I don't know'\nescalate to a human", fillcolor="#FEE2E2", color="#B91C1C"];
+  t -> e -> v -> m -> s -> d;
+}

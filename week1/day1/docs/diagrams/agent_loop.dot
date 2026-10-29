@@ -1,0 +1,17 @@
+// The agent loop (tool use) used in common/llm.py run_tool_loop().
+digraph G {
+  rankdir=TB; fontname="Inter"; nodesep=0.5; ranksep=0.45; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.16,0.09"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+
+  start [label="User goal + system prompt + tool descriptions", fillcolor="#E0F2FE"];
+  model [label="Model call (Messages API)\nreads everything so far", fillcolor="#EDE9FE", color="#6D28D9"];
+  q     [label="stop_reason = tool_use ?", shape=diamond, fillcolor="#FEF9C3", style="filled"];
+  run   [label="OUR CODE runs the requested tool\n(guardrails live here)", fillcolor="#FEE2E2", color="#B91C1C"];
+  hist  [label="Append tool_result to the history\n(history is re-sent next call)"];
+  done  [label="Final answer returned", fillcolor="#DCFCE7"];
+  cap   [label="Step budget reached:\nstop (cost and safety guard)", fillcolor="#FFEDD5"];
+
+  start -> model; model -> q; q -> run [label="yes"]; run -> hist; hist -> model [label="repeat"];
+  q -> done [label="no"]; hist -> cap [style=dashed, label="steps > max"];
+}

@@ -1,0 +1,18 @@
+SERVICES AGREEMENT - EXTRACT (fictional, for training use)
+
+4.1 Fees. The Customer shall pay the Supplier a fixed monthly fee of 12,400.00 for the
+Managed Support Service, invoiced on the first business day of each month.
+
+4.2 Late payment. Invoices unpaid after 30 days incur interest at 1.5% per month on the
+overdue amount.
+
+7.1 Service credits. If monthly availability falls below 99.5%, the Supplier shall credit
+5% of that month's fee for each full 0.5 percentage points below 99.5%, up to a maximum
+credit of 20% of the monthly fee.
+
+9.2 Termination for convenience. Either party may terminate on 90 days' written notice.
+If the Customer terminates in the first 12 months, an early-termination charge equal to
+two months' fees applies.
+
+11.4 Data location. Customer personal data shall be processed only within the European
+Economic Area unless the Customer gives prior written consent.

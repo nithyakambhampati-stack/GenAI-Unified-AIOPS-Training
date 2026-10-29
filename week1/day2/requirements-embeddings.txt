@@ -1,0 +1,9 @@
+# OPTIONAL - real semantic embeddings for the Day 2 embeddings demo.
+# Install with:  pip install -r requirements-embeddings.txt
+#
+# fastembed runs a small open embedding model locally (ONNX, no GPU needed).
+# The model (about 130 MB) is downloaded the first time you run the demo, so the
+# VM needs internet access to the Hugging Face hub for that one step.
+# If this install or download is blocked, the demo automatically falls back to a
+# small hand-built "toy" embedder that still shows the idea - nothing breaks.
+fastembed

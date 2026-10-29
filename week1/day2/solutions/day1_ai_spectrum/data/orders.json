@@ -1,0 +1,10 @@
+[
+  {"order_id": "ORD-1001", "customer_email": "asha.rao@example.com",   "item": "Wireless headphones", "amount": 79.00,  "status": "delivered", "ordered": "2026-09-20", "promised": "2026-09-27", "delivered": "2026-10-09", "condition_note": ""},
+  {"order_id": "ORD-1002", "customer_email": "ben.cole@example.com",   "item": "Ceramic coffee set",  "amount": 45.50,  "status": "delivered", "ordered": "2026-10-02", "promised": "2026-10-08", "delivered": "2026-10-07", "condition_note": "Courier note: box crushed on arrival"},
+  {"order_id": "ORD-1003", "customer_email": "chen.wu@example.com",    "item": "Standing desk",       "amount": 420.00, "status": "delivered", "ordered": "2026-09-25", "promised": "2026-10-02", "delivered": "2026-10-14", "condition_note": ""},
+  {"order_id": "ORD-1004", "customer_email": "dina.ito@example.com",   "item": "Running shoes",       "amount": 64.99,  "status": "delivered", "ordered": "2026-08-01", "promised": "2026-08-08", "delivered": "2026-08-07", "condition_note": ""},
+  {"order_id": "ORD-1005", "customer_email": "eli.park@example.com",   "item": "Desk lamp",           "amount": 32.00,  "status": "in_transit", "ordered": "2026-10-15", "promised": "2026-10-22", "delivered": null, "condition_note": ""},
+  {"order_id": "ORD-1006", "customer_email": "farah.ali@example.com",  "item": "Backpack",            "amount": 58.00,  "status": "delivered", "ordered": "2026-09-28", "promised": "2026-10-04", "delivered": "2026-10-05", "condition_note": ""},
+  {"order_id": "ORD-1007", "customer_email": "gus.lund@example.com",   "item": "Bluetooth speaker",   "amount": 89.00,  "status": "delivered", "ordered": "2026-10-01", "promised": "2026-10-07", "delivered": "2026-10-06", "condition_note": "Courier note: left at neighbour"},
+  {"order_id": "ORD-1008", "customer_email": "hana.sato@example.com",  "item": "Office chair",        "amount": 249.00, "status": "delivered", "ordered": "2026-10-03", "promised": "2026-10-09", "delivered": "2026-10-20", "condition_note": ""}
+]

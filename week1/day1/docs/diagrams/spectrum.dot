@@ -1,0 +1,19 @@
+// The automation-to-agentic spectrum, mapped onto one business scenario.
+digraph G {
+  rankdir=TB; fontname="Inter"; nodesep=0.3; ranksep=0.7; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", margin="0.16,0.1"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+
+  l1 [label="LEVEL 1\nTraditional automation\n\nKeyword rules\nPerson writes every rule", fillcolor="#F1F5F9"];
+  l2 [label="LEVEL 2\nAI automation\n\nModel reads and writes text\nPerson draws the workflow", fillcolor="#E0F2FE"];
+  l3 [label="LEVEL 3\nAI agent\n\nModel picks tool calls\nfor ONE ticket", fillcolor="#DCFCE7"];
+  l4 [label="LEVEL 4\nMulti-agent system\n\nInvestigator - Resolver - Reviewer\nspecialists check each other", fillcolor="#FEF9C3"];
+  l5 [label="LEVEL 5\nAgentic AI\n\nGiven a GOAL: clear the queue\nplans its own work", fillcolor="#FFEDD5"];
+  l1 -> l2 -> l3 -> l4 -> l5 [penwidth=1.6, label="more autonomy >>"];
+
+  desk [label="Guarded business system (plain Python)\nownership check - policy check - exact amount - no duplicates\nauto-approve limit (human queue above it) - spend budget - audit log",
+        fillcolor="#FEE2E2", color="#B91C1C", shape=box];
+  {rank=same; l1; l2; l3; l4; l5;}
+  l1 -> desk [style=dashed, arrowhead=none]; l2 -> desk [style=dashed, arrowhead=none]; l3 -> desk [style=dashed, arrowhead=none];
+  l4 -> desk [style=dashed, arrowhead=none]; l5 -> desk [style=dashed, arrowhead=none];
+}

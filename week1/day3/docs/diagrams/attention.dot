@@ -1,0 +1,11 @@
+digraph G {
+  rankdir=LR; fontname="Inter"; nodesep=0.3; ranksep=0.45; pad=0.3; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#475569", fillcolor="#F1F5F9", margin="0.16,0.1"];
+  edge [fontname="Inter", fontsize=9, color="#475569"];
+  a [label="Text", fillcolor="#E0F2FE"];
+  b [label="1  Tokens\n(Day 1)\npieces of text", fillcolor="#DCFCE7"];
+  c [label="2  Embeddings\n(Day 2)\none vector per token", fillcolor="#DCFCE7"];
+  d [label="3  Attention\neach token takes DOT PRODUCTS\nwith the others to decide\nwho to pay attention to", fillcolor="#FEF9C3", color="#A16207"];
+  e [label="4  Output\nvectors that now carry\ncontext", fillcolor="#EDE9FE", color="#6D28D9"];
+  a -> b -> c -> d -> e;
+}

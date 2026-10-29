@@ -1,0 +1,10 @@
+{
+  "_note": "EXAMPLE policy for the lab only. Replace every row with your own organisation's approved-tools list before using it for real decisions.",
+  "tools": [
+    {"tool": "Claude Code CLI + programme API key", "account": "programme (organisation-managed)", "allowed_data": "internal and synthetic; no customer personal data unless your data policy says so", "notes": "Used in the lab; key is issued centrally."},
+    {"tool": "Claude.ai", "account": "personal / free", "allowed_data": "public or synthetic text only", "notes": "Consumer terms; settings may allow use of conversations for improvement. Check the privacy toggle."},
+    {"tool": "ChatGPT", "account": "personal / free", "allowed_data": "public or synthetic text only", "notes": "Consumer terms; check the data-controls setting."},
+    {"tool": "Gemini", "account": "personal / free", "allowed_data": "public or synthetic text only", "notes": "Consumer terms; check the activity setting."},
+    {"tool": "Any of the above", "account": "enterprise agreement", "allowed_data": "per your organisation's classification policy", "notes": "Enterprise plans normally have different data terms. Ask your security team; never assume."}
+  ]
+}
