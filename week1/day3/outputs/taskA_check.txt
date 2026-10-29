@@ -1,0 +1,30 @@
+Dimensions: ['lending', 'fraud_risk', 'kyc_compliance', 'customer_service']
+
+A = overdraft = [4, 2, 1, 3]
+B = chargeback = [1, 4, 1, 3]
+
+1. Dot product      A.B   = 4x1 + 2x4 + 1x1 + 3x3 = 22
+2. Length of A      |A|   = sqrt(4^2 + 2^2 + 1^2 + 3^2) = sqrt(30) = 5.4772
+3. Length of B      |B|   = sqrt(1^2 + 4^2 + 1^2 + 3^2) = sqrt(27) = 5.1962
+4. Cosine similarity      = A.B / (|A| x |B|) = 22 / (5.4772 x 5.1962) = 0.7730
+5. Euclidean distance     = sqrt((4-1)^2 + (2-4)^2 + (1-1)^2 + (3-3)^2) = sqrt(13) = 3.6056
+Dimensions: ['lending', 'fraud_risk', 'kyc_compliance', 'customer_service']
+
+A = KYC = [1, 1, 5, 1]
+B = AML = [0, 4, 4, 0]
+
+1. Dot product      A.B   = 1x0 + 1x4 + 5x4 + 1x0 = 24
+2. Length of A      |A|   = sqrt(1^2 + 1^2 + 5^2 + 1^2) = sqrt(28) = 5.2915
+3. Length of B      |B|   = sqrt(0^2 + 4^2 + 4^2 + 0^2) = sqrt(32) = 5.6569
+4. Cosine similarity      = A.B / (|A| x |B|) = 24 / (5.2915 x 5.6569) = 0.8018
+5. Euclidean distance     = sqrt((1-0)^2 + (1-4)^2 + (5-4)^2 + (1-0)^2) = sqrt(12) = 3.4641
+Dimensions: ['lending', 'fraud_risk', 'kyc_compliance', 'customer_service']
+
+A = complaint = [0, 1, 0, 5]
+B = fraud = [0, 5, 2, 1]
+
+1. Dot product      A.B   = 0x0 + 1x5 + 0x2 + 5x1 = 10
+2. Length of A      |A|   = sqrt(0^2 + 1^2 + 0^2 + 5^2) = sqrt(26) = 5.0990
+3. Length of B      |B|   = sqrt(0^2 + 5^2 + 2^2 + 1^2) = sqrt(30) = 5.4772
+4. Cosine similarity      = A.B / (|A| x |B|) = 10 / (5.0990 x 5.4772) = 0.3581
+5. Euclidean distance     = sqrt((0-0)^2 + (1-5)^2 + (0-2)^2 + (5-1)^2) = sqrt(36) = 6.0000

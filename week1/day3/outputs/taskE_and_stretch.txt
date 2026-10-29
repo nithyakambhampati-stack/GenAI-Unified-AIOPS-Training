@@ -1,0 +1,30 @@
+TASK E - two change requests that score as near-duplicates but mean the opposite
+  retire request: [5, 3, 2, 2]
+  keep request  : [5, 3, 2, 3]
+  cosine = 0.990   distance = 1.000
+  A similarity search would treat these as the same request. Acting on the wrong one switches off
+  a job that month-end close depends on (or leaves a retired job running and paying licence costs).
+
+STRETCH 1 - on unit vectors, distance^2 = 2 - 2 x cosine
+  pair: COBOL batch posting job / Monthly report extract
+  cosine                       = 0.816982
+  distance^2 of unit vectors   = 0.366035
+  2 - 2 x cosine               = 0.366035
+
+STRETCH 2 - centroids of two migration waves
+  wave 1 (scheduler-heavy batch)    centre = [5.0, 3.0, 1.5, 2.5]
+  wave 2 (data and file movement)   centre = [1.67, 2.67, 3.67, 1.33]
+  cosine between the two centres = 0.770
+  Abend error handler vs wave 1 (scheduler-heavy batch): cosine 0.561
+  Abend error handler vs wave 2 (data and file movement): cosine 0.461
+  The same idea is a drift check: compare the centre of this month's items with last month's.
+
+STRETCH 3 - which dimension moves the cosine most? (COBOL batch posting vs Monthly report extract)
+  baseline cosine = 0.8170
+  batch_scheduling     +1: -0.0395   +2: -0.0754
+  data_transformation  +1: +0.0176   +2: +0.0221
+  file_transfer_io     +1: +0.0618   +2: +0.1023
+  error_handling       +1: -0.0180   +2: -0.0468
+  A number moves the score most when it is in a dimension where the two items disagree;
+  raising an already-large shared number barely moves it. No dimension has a fixed weight.
+

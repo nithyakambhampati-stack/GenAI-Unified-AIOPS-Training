@@ -1,0 +1,47 @@
+
+EXPERIMENT 1 - Same direction, different length
+  A = [3, 4], B = [6, 8] (B is A doubled)
+  cosine similarity  = 1.0000   <- identical direction: 'the same meaning'
+  euclidean distance = 5.0000   <- far apart, only because B is bigger
+  Real-life version: a 2-page and a 20-page policy about the SAME topic produce vectors of different length.
+  Cosine ignores length and compares topic. That is why it is the usual choice for text.
+
+EXPERIMENT 2 - Rank sentences for the query: 'Is this applicant's ID document valid?'
+  sentence                                                              cosine  distance
+  Verify identity documents for account opening                          0.968     1.414
+  Mortgage application is missing KYC documents                          0.846     3.162
+  Suspicious transaction flagged as possible fraud                       0.562     5.000
+  Annual report on lending volumes and servicing (very long document)    0.294    13.191
+  Customer complains about a delayed card chargeback                     0.264     6.708
+  Customer asks about home loan eligibility                              0.260     6.782
+  Branch opening hours and holiday notice                                0.136     5.196
+  Best by cosine   : Verify identity documents for account opening
+  Best by distance : Verify identity documents for account opening
+  They agree here. Look at the next query: there they will not.
+
+EXPERIMENT 2 - Rank sentences for the query: 'Question about our loans and customer service'
+  sentence                                                              cosine  distance
+  Annual report on lending volumes and servicing (very long document)    0.998     5.916
+  Customer asks about home loan eligibility                              0.987     2.236
+  Branch opening hours and holiday notice                                0.898     6.633
+  Mortgage application is missing KYC documents                          0.730     5.385
+  Verify identity documents for account opening                          0.525     6.856
+  Customer complains about a delayed card chargeback                     0.327     8.124
+  Suspicious transaction flagged as possible fraud                       0.162     8.832
+  Best by cosine   : Annual report on lending volumes and servicing (very long document)
+  Best by distance : Customer asks about home loan eligibility
+  THEY DISAGREE. Cosine prefers the very long document: it points the same way as the query.
+  Distance prefers the short, on-topic sentence: the long document's vector is simply far away (it is big).
+  Neither is always right. It is one reason retrieval systems cut documents into chunks of similar size (Day 4).
+
+EXPERIMENT 3 - Shrink every vector to length 1 and the two measures become the same story
+  cosine(loan, mortgage)                       = 0.9718
+  dot product of the unit-length versions      = 0.9718   (same number)
+  distance^2 of unit-length versions           = 0.0563
+  2 - 2 x cosine                               = 0.0563   (same number)
+  So on unit-length vectors: higher cosine <=> smaller distance. Many embedding models output unit-length vectors.
+
+EXPERIMENT 4 - Do professional libraries give the same answers?
+  cosine    mine=0.971825  numpy=0.971825
+  distance  mine=1.414214  numpy=1.414214
+  Same numbers: libraries do exactly this arithmetic, only faster and on millions of vectors at once.

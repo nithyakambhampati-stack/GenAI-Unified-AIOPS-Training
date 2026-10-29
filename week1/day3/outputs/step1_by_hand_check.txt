@@ -1,0 +1,36 @@
+
+============================================================
+E1  (2-D warm-up)
+   A = [3, 4]
+   B = [4, 3]
+   Your dot product:    dot product: correct
+   Your cosine similarity:    cosine similarity: correct
+   Your Euclidean distance:    Euclidean distance: correct
+
+============================================================
+E2  (same direction, different length)
+   A = [3, 4]
+   B = [6, 8]
+   Your dot product:    dot product: correct
+   Your cosine similarity:    cosine similarity: correct
+   Your Euclidean distance:    Euclidean distance: correct
+
+============================================================
+E3  loan vs mortgage (4-D)
+   A = [5, 1, 2, 2]
+   B = [5, 1, 3, 1]
+   Your dot product:    dot product: correct
+   Your cosine similarity:    cosine similarity: correct
+   Your Euclidean distance:    Euclidean distance: correct
+
+============================================================
+E4  loan vs fraud (4-D)
+   A = [5, 1, 2, 2]
+   B = [0, 5, 2, 1]
+   Your dot product:    dot product: correct
+   Your cosine similarity:    cosine similarity: correct
+   Your Euclidean distance:    Euclidean distance: correct
+
+============================================================
+Score: 12/12 correct
+Next: Claude Code writes the same functions in Python (step 2), and you check its work (step 3).

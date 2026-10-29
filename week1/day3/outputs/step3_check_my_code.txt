@@ -1,0 +1,9 @@
+Checking my_vector_math.py against the answer key
+
+  dot                 PASS
+  norm                PASS
+  cosine_similarity   PASS
+  euclidean_distance  PASS
+
+4/4 functions pass.
+All good. Now explain to your partner, in your own words, what each function does and why.

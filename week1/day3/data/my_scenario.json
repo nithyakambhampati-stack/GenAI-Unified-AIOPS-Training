@@ -1,0 +1,12 @@
+{
+  "_note": "Scenario 5 - Legacy modernization copilot. Synthetic. Each item is a legacy job description; the numbers 0-5 say how much of the job's work falls in each dimension. Used to find which legacy jobs could be migrated together.",
+  "dimensions": ["batch_scheduling", "data_transformation", "file_transfer_io", "error_handling"],
+  "items": {
+    "COBOL batch posting job":     [5, 3, 2, 2],
+    "Informatica mapping":         [1, 5, 2, 1],
+    "Nightly reconciliation":      [5, 3, 1, 3],
+    "Monthly report extract":      [2, 3, 4, 1],
+    "SFTP file transfer":          [2, 0, 5, 2],
+    "Abend error handler":         [1, 0, 1, 5]
+  }
+}

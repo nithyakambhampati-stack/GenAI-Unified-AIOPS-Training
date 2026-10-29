@@ -1,0 +1,4 @@
+v1 tie, insertion order b,a -> ['b', 'a']
+v1 tie, insertion order a,b -> ['a', 'b']
+v1 empty candidates -> []
+v1 zero-vector candidate -> ValueError: cosine similarity is undefined for a zero vector

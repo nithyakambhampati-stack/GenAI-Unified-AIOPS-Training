@@ -1,0 +1,19 @@
+test_average_of_each_position (test_mine.Centroid.test_average_of_each_position) ... ok
+test_empty_and_mismatched (test_mine.Centroid.test_empty_and_mismatched) ... ok
+test_different_lengths (test_mine.FourFunctions.test_different_lengths) ... ok
+test_negative_numbers (test_mine.FourFunctions.test_negative_numbers) ... ok
+test_task_a_pairs (test_mine.FourFunctions.test_task_a_pairs) ... ok
+test_worked_example (test_mine.FourFunctions.test_worked_example) ... ok
+test_zero_vector (test_mine.FourFunctions.test_zero_vector) ... ok
+test_bad_metric_and_bad_length (test_mine.Nearest.test_bad_metric_and_bad_length) ... ok
+test_cosine_higher_is_better (test_mine.Nearest.test_cosine_higher_is_better) ... ok
+test_empty_candidates (test_mine.Nearest.test_empty_candidates) ... ok
+test_euclidean_lower_is_better (test_mine.Nearest.test_euclidean_lower_is_better) ... ok
+test_ties_broken_by_name_whatever_the_dict_order (test_mine.Nearest.test_ties_broken_by_name_whatever_the_dict_order) ... ok
+test_zero_vector_allowed_for_euclidean (test_mine.Nearest.test_zero_vector_allowed_for_euclidean) ... ok
+test_zero_vector_candidate_is_named (test_mine.Nearest.test_zero_vector_candidate_is_named) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.001s
+
+OK
