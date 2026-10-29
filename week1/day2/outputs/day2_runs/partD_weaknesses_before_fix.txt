@@ -1,0 +1,8 @@
+1) number forms tried for 1.5: ['1.5', '1.50', '2']  <- '2' is a rounded form that is not in the contract
+   monthly_fee              quote_exists=True  number_in_quote=True  passed=True
+   credit_percent_per_step  quote_exists=True  number_in_quote=True  passed=True
+   credit_cap_percent       quote_exists=True  number_in_quote=False passed=False
+   credit_for_98_6          quote_exists=True  number_in_quote=None  passed=True
+   termination_charge_8m    quote_exists=True  number_in_quote=None  passed=True
+2) '5' counted as found inside '1.5%': True
+3) risk tier with an unsupported number for the cap: LOW  <- number_in_quote=False does not raise the tier

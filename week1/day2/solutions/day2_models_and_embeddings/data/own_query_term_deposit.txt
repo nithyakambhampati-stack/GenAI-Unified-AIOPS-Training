@@ -1,0 +1,14 @@
+Answer using ONLY the terms below. Give each answer in one line, then cite the clause number. Maximum 80 words in total.
+
+TERM DEPOSIT - PREMATURE CLOSURE TERMS (fictional, for training use)
+3.1 A term deposit may be closed before maturity on a written request signed by all account holders.
+3.2 If the deposit is closed within 7 days of opening, no interest is paid.
+3.3 If it is closed after 7 days, interest is paid at the card rate for the period the deposit actually ran, not the period it was booked for, minus a penalty of 0.75 percentage points. The rate paid is never below 0%.
+3.4 Closure of a deposit of 500,000.00 or more must be approved by the branch manager.
+3.5 Partial withdrawal is not allowed; the whole deposit must be closed.
+Card rates (per year): 7-90 days 4.00%; 91-180 days 5.25%; 181-365 days 6.10%; over 365 days 6.75%.
+
+Questions:
+1. A 200,000.00 deposit booked for 2 years is closed after 120 days. What annual rate is paid?
+2. A customer wants to take 50,000.00 out of a 300,000.00 deposit and leave the rest. Is that allowed?
+3. A 600,000.00 deposit is closed on day 5. How much interest is paid, and who must approve the closure?

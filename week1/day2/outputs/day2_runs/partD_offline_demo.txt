@@ -1,0 +1,14 @@
+item                           model  expected  quote exists  right clause  number in quote  value ok
+--------------------------------------------------------------------------------------------------
+monthly_fee                    12400     12400  yes          yes          yes              yes
+late_interest_pct_month          1.5       1.5  yes          yes          yes              yes
+credit_percent_per_step            5         5  yes          yes          yes              yes
+credit_cap_percent                25        20  NO           NO           yes              NO
+credit_for_98_6                 1240       620  yes          yes          n/a              NO
+termination_charge_8m          24800     24800  yes          yes          n/a              yes
+
+RISK TIER: HIGH
+-> Possible fabricated evidence. Do not use. A person must review the source.
+Audit entry appended to: C:\Users\Admin\Downloads\genaiops-gitlab\week1\day2\outputs\verification_audit.jsonl
+
+Pattern to remember: the model PROPOSES, code VERIFIES, a human DECIDES, the system LOGS.

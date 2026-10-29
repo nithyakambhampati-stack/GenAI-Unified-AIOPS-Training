@@ -127,7 +127,10 @@ def plot_map(vectors: np.ndarray, rows: list[dict], title: str, path: Path) -> N
 
     points = PCA(n_components=2, random_state=0).fit_transform(vectors)  # keep the 2 directions with most variation
     topics = sorted({r["topic"] for r in rows})
-    palette = ["#1f77b4", "#d95f02", "#2ca02c", "#7b3294"]              # distinct, colour-blind-friendly
+    palette = ["#1f77b4", "#d95f02", "#2ca02c", "#7b3294", "#e7298a", "#66a61e", "#a6761d", "#666666"]
+    if len(topics) > len(palette):
+        # zip() would silently drop the extra topics from the map, so refuse instead.
+        raise ValueError(f"{len(topics)} topics but only {len(palette)} colours: add colours to the palette")
     fig, ax = plt.subplots(figsize=(8, 6))
     for colour, topic in zip(palette, topics):
         idx = [i for i, r in enumerate(rows) if r["topic"] == topic]
@@ -145,6 +148,8 @@ def plot_map(vectors: np.ndarray, rows: list[dict], title: str, path: Path) -> N
 def main() -> None:
     parser = argparse.ArgumentParser(description="Embeddings and semantic search demo")
     parser.add_argument("--toy", action="store_true", help="force the offline toy embedder")
+    parser.add_argument("--query", action="append", default=[],
+                        help="extra query to search for (repeat for several); added to the three built-in ones")
     args = parser.parse_args()
 
     rows = json.loads((DATA_DIR / "sentences.json").read_text(encoding="utf-8"))
@@ -158,7 +163,7 @@ def main() -> None:
         "Reimburse me for the defective goods",
         "I can't sign into my profile",
         "How much vacation am I entitled to?",
-    ]
+    ] + args.query
     q_vecs = embed(queries)
     for query, q_vec in zip(queries, q_vecs):
         print(f"QUERY: {query}")

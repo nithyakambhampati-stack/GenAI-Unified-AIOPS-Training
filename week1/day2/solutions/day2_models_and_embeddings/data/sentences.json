@@ -14,5 +14,13 @@
   {"topic": "hr_leave", "text": "How many days of annual leave do I get each year?"},
   {"topic": "hr_leave", "text": "I need to book a holiday for the first week of December."},
   {"topic": "hr_leave", "text": "What is the process to report a sick day to my manager?"},
-  {"topic": "hr_leave", "text": "Can I carry unused vacation days into next year?"}
+  {"topic": "hr_leave", "text": "Can I carry unused vacation days into next year?"},
+  {"topic": "facilities", "text": "The air conditioning on the third floor has been broken since Monday."},
+  {"topic": "facilities", "text": "Please reserve the large meeting room for Thursday afternoon."},
+  {"topic": "facilities", "text": "A ceiling light in the east wing kitchen keeps flickering."},
+  {"topic": "facilities", "text": "Can someone repair the faulty lock on the bike storage gate?"},
+  {"topic": "facilities", "text": "The water cooler near reception is leaking onto the carpet."},
+  {"topic": "facilities", "text": "We need six extra chairs set up in the training suite tomorrow."},
+  {"topic": "facilities", "text": "The lift to the car park is out of service again."},
+  {"topic": "facilities", "text": "Who do I ask to get a spare desk pedestal key cut?"}
 ]

@@ -1,0 +1,34 @@
+fastembed not installed -> using the offline toy embedder.
+(For real embeddings: pip install -r requirements-embeddings.txt)
+
+Embedder: toy lexicon embedder (6-d)
+Embedding 24 sentences ...
+Each sentence became a vector of 6 numbers.
+
+QUERY: Reimburse me for the defective goods
+  1. sim= 0.96  shared words=1  [facilities] Can someone repair the faulty lock on the bike storage gate?
+  2. sim= 0.90  shared words=1  [refunds] I would like my money returned because the item arrived broken.
+  3. sim= 0.90  shared words=1  [facilities] The air conditioning on the third floor has been broken since Monday.
+
+QUERY: I can't sign into my profile
+  1. sim= 1.00  shared words=3  [it_access] I forgot my password and cannot sign in to the portal.
+  2. sim= 1.00  shared words=0  [it_access] Please grant me access to the shared project folder.
+  3. sim= 0.99  shared words=1  [it_access] The two-factor code is not working on my new phone.
+
+QUERY: How much vacation am I entitled to?
+  1. sim= 0.97  shared words=1  [hr_leave] What is the process to report a sick day to my manager?
+  2. sim= 0.97  shared words=2  [hr_leave] I need to book a holiday for the first week of December.
+  3. sim= 0.97  shared words=2  [hr_leave] Can I carry unused vacation days into next year?
+
+Look at 'shared words': the best matches share few or no words with the query - that is semantic search.
+(The toy embedder is coarse, so ties at 1.00 are expected; a real model gives finer scores.)
+
+Toy vector for the first sentence, by concept:
+  money     0.80  ################
+  delivery  0.44  #########
+  damage    0.40  ########
+  access    0.05  #
+  leave     0.00  
+  security  0.05  #
+
+Map saved: C:\Users\Admin\Downloads\genaiops-gitlab\week1\day2\outputs\embedding_map.png  (sentences on the same topic should cluster)
