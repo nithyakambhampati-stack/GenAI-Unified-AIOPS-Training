@@ -1,17 +1,39 @@
-# Task B - prompt log (Claude Code)
+# Task B - prompt log
 
-Tool: Claude Code in VS Code, working in this folder. Every result was run and checked before it was accepted.
+I used Claude Code in VS Code, working in this folder. I ran and checked everything before keeping it.
 
-| # | Prompt (short form) | What Claude Code produced | What was wrong or missing | What I did |
-|---|---|---|---|---|
-| 1 | Prompt 1: implement `dot`, `norm`, `cosine_similarity`, `euclidean_distance`; standard library only; comment above each line; `ValueError` for a zero vector and for different lengths; do not open `vector_math.py` | The four functions plus a small `_check_same_length()` helper used by the three two-vector functions | Nothing wrong. `norm` takes one vector, so the "different lengths" rule cannot apply to it - noted rather than forced | Ran `step3_check_my_code.py`: 4/4 PASS. Compared with my hand working (dot 24, lengths 5 and 5, cosine 0.96): same numbers |
-| 2 | Prompt 2: walk through `cosine_similarity([3, 4], [4, 3])` line by line | Length check, norms 5 and 5, zero check, dot 24, 24 / 25 = 0.96 | Nothing | Matched my paper working |
-| 3 | Prompt 5: add `nearest(query, candidates, metric="cosine")` | Version 1: two `sorted()` calls, `reverse=True` for cosine, ascending for euclidean, `ValueError` for an unknown metric | (a) **Ties**: equal scores came back in whatever order the dict happened to have, so the same data in a different order gave a different answer (`outputs/taskB_nearest_v1_issues.txt`). (b) **Zero-vector candidate**: the whole ranking crashed with "undefined for a zero vector" without saying *which* candidate was the problem. (c) An unknown metric with an empty candidate list was only caught because of the order of the `if`s - fragile | Asked for version 2: tie-break by name, check the metric first, name the bad candidate in every error, round scores to 12 decimals so floating-point noise does not break a real tie |
-| 4 | Prompt 4: write unittest tests, put them in `test_mine.py`, run them | First set: 5 tests (worked example, zero vector, different lengths, negatives, direction vs length) | The first `nearest` test used candidates where both metrics agree on the order, so it **could not fail** if someone swapped "higher is better" and "lower is better" | Rewrote it with one candidate that is far away but in the same direction and one that is close but angled, so cosine and distance give **opposite** orders. Added tests for ties (both dict orders), empty candidates, the named zero-vector error, a bad metric, a bad length, and `centroid()`. Added my Task A numbers as a test |
-| 5 | Stretch: add `centroid(vectors)` | Average of each position, `ValueError` for an empty list or mixed lengths | Nothing | Accepted; used in `day3_extras.py` |
+1. Prompt 1: write `dot`, `norm`, `cosine_similarity` and `euclidean_distance` using only the standard library, with
+   a comment above each line, a ValueError for zero vectors and for different lengths, and without looking at
+   `vector_math.py`.
+   It wrote the four functions plus a small `_check_same_length()` helper. Nothing was wrong. `norm` only takes one
+   vector, so the "different lengths" rule doesn't apply to it, which is fine. I ran `step3_check_my_code.py` and got
+   4/4. I also checked it against my paper working (dot 24, lengths 5 and 5, cosine 0.96), and the numbers matched.
 
-**Final state:** `python -m unittest test_mine -v` → 14 tests OK (`outputs/taskB_test_mine.txt`);
-`python step3_check_my_code.py` → still 4/4 PASS (`outputs/step3_check_my_code.txt`).
+2. Prompt 2: walk me through `cosine_similarity([3, 4], [4, 3])` line by line.
+   Length check, norms 5 and 5, zero check, dot 24, 24 / 25 = 0.96. That matched what I had on paper.
 
-**What I learnt:** the first version "worked" on the happy path. The problems only showed up with inputs nobody
-writes by accident in a demo: ties, an empty form, a blank vector. A test only counts if it can fail.
+3. Prompt 5: add `nearest(query, candidates, metric="cosine")`.
+   The first version used two `sorted()` calls, one descending for cosine and one ascending for distance. I found
+   three problems with it (`outputs/taskB_nearest_v1_issues.txt`):
+   - With tied scores the order depended on the dict, so the same data in a different order gave a different answer.
+   - A zero-vector candidate crashed the whole ranking, and the error didn't say which candidate it was.
+   - A bad metric with an empty candidate list was only caught because of the order of the `if` statements.
+   I asked for a second version: break ties by name, check the metric first, name the bad candidate in the error, and
+   round scores to 12 decimal places so floating-point noise doesn't break a real tie.
+
+4. Prompt 4: write unittest tests in `test_mine.py` and run them.
+   It started with 5 tests. The problem was that the `nearest` test used candidates where both metrics agree, so it
+   would still pass if someone mixed up "higher is better" and "lower is better". I changed it so one candidate is
+   far away but pointing the same way, and the other is close but at an angle, which makes cosine and distance give
+   opposite answers. I also added tests for ties (both dict orders), empty candidates, the zero-vector error, a bad
+   metric, wrong lengths, `centroid()`, and my Task A numbers.
+
+5. Stretch: add `centroid(vectors)`.
+   It averages each position and raises ValueError for an empty list or mixed lengths. I kept it as is and used it in
+   `day3_extras.py`.
+
+End result: `python -m unittest test_mine -v` gives 14 OK, and `step3_check_my_code.py` is still 4/4.
+
+What I learnt: the first version worked fine on normal input. The problems only showed up with things you don't
+think to try in a demo, like ties, an empty list or a zero vector. And a test is only worth having if it can
+actually fail.

@@ -1,30 +1,42 @@
 # Approved AI tools - team guideline (DRAFT)
 
-> **DRAFT for review.** This page is a proposal from the GenAI Ops training. It is **not** policy until our
-> organisation's Information Security and Legal teams have reviewed and confirmed it. Where this draft and an
-> official policy disagree, the official policy wins.
+This is a draft from the GenAI Ops training. It isn't policy until Information Security and Legal have reviewed it.
+If it disagrees with an official policy, the official policy wins.
 
-**Scope.** Generative-AI tools used for day-to-day work: Claude Code with the organisation-issued key, consumer chat
-apps on a personal account (Claude.ai, ChatGPT, Gemini free or personal plans), and chat tools under an enterprise
-agreement. **Rule of thumb:** classify the data *before* you choose the tool, not after.
+It covers the AI tools we use day to day: Claude Code with the organisation's key, chat apps on a personal account
+(Claude.ai, ChatGPT, Gemini on free or personal plans), and chat tools under an enterprise agreement.
 
-| Data class | Example | Claude Code with organisation key | Consumer chat (personal account) | Enterprise plan chat |
+Main rule: work out what kind of data it is first, then pick the tool.
+
+| Data | Example | Claude Code (org key) | Personal chat account | Enterprise chat |
 |---|---|---|---|---|
-| **Public** | A published web page, a public regulation, open-source code | **Allowed.** Public data carries no confidentiality risk; normal care about accuracy still applies. | **Allowed.** Nothing is disclosed that is not already public; still verify the answer before using it. | **Allowed.** Same as the other columns; the enterprise plan adds no restriction for public data. |
-| **Internal** | Meeting notes without personal data, an internal process description, non-sensitive code | **Allowed.** The key is organisation-managed, but use only the repositories and folders you need and never paste secrets or credentials. | **Not allowed.** Personal accounts sit under consumer terms; chats may be stored and, depending on a setting the organisation cannot control, used to improve models. | **Ask security.** Usually acceptable once the agreement confirms no training on our data and an agreed retention period, but that must be checked for our specific contract. |
-| **Confidential / personal** | Customer names and order history, account numbers, employee records, contract terms with a client | **Ask security.** Only with a documented data-protection review for the use case, data minimised or redacted first, and nothing that the client contract forbids sending to a third party. | **Not allowed.** Personal data in a personal account is outside our control and may breach data-protection law and client contracts; redaction tools miss names and free text. | **Ask security.** Even under enterprise terms, personal and client-confidential data needs a lawful basis, data-location checks (for example EEA-only clauses) and the data owner's approval. |
+| Public | A published web page, a public regulation, open-source code | Allowed | Allowed | Allowed |
+| Internal | Meeting notes with no personal data, process descriptions, ordinary code | Allowed, but only open the folders you need, and never paste secrets | Not allowed | Ask Security |
+| Confidential / personal | Customer names and orders, account numbers, employee records, client contract terms | Ask Security | Not allowed | Ask Security |
 
-**Always, whatever the tool**
+Why:
+- Public data has nothing to leak, but you still need to check the answers are right.
+- Personal accounts are under consumer terms. Chats can be stored and, depending on a setting we can't control,
+  used for training. That's why internal data isn't allowed there. With confidential data it could also break
+  data-protection law or a client contract, and redaction tools often miss names and free text.
+- Enterprise plans are usually fine for internal data once we've confirmed the contract says no training on our
+  data and gives a retention period. We need to check that for our actual contract, though.
+- For confidential data with Claude Code or an enterprise tool, we need a data-protection review for the use case,
+  the data cut down or redacted first, a check on where the data is stored (for example EEA-only), and sign-off
+  from the data owner. Also nothing the client contract says can't go to a third party.
 
-1. Use synthetic or public examples when you are learning or testing prompts.
-2. Never paste API keys, passwords, connection strings or `.env` contents into any chat.
-3. Treat every answer as a draft: check figures and quotes against the source before anyone acts on them.
-4. Check the "use my data to improve the model" setting on any personal account you use for public data, and record
-   whether an account is personal or enterprise.
-5. If you are unsure which class the data is in, treat it as the higher class and ask.
+Whatever the tool:
+1. Use made-up or public examples when you're learning or testing prompts.
+2. Never paste API keys, passwords, connection strings or `.env` contents into a chat.
+3. Treat every answer as a draft, and check numbers and quotes against the source before anyone acts on them.
+4. On any personal account, check the "use my data to improve the model" setting and note whether the account is
+   personal or enterprise.
+5. If you're not sure which kind of data it is, assume the more sensitive one and ask.
 
-**Open questions for Security and Legal:** which enterprise agreements we actually hold and their retention and
-training terms; whether the organisation key may ever process client data, and under which contracts; the approved
-redaction tool, if any; and who signs off new tools.
+Questions for Security and Legal:
+- Which enterprise agreements do we actually have, and what do they say about retention and training?
+- Can the org key ever be used on client data, and under which contracts?
+- Is there an approved redaction tool?
+- Who signs off new tools?
 
-*Prepared from `data/approved_tools.json` (lab example list). Draft version 0.1.*
+Based on the lab's `data/approved_tools.json`. Draft v0.1.

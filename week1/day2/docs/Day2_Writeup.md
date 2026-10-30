@@ -1,30 +1,28 @@
-# Day 2 take-home - model tiers, embeddings and verification
+# Day 2 take-home: model tiers, embeddings and verification
 
-All data is synthetic. No `.env` or API key is included. Evidence is in `outputs/` and `outputs/day2_runs/`.
+All the data is made up. Outputs are in `outputs/` and `outputs/day2_runs/`.
 
-> **Status:** Parts C, D and E are complete. **Part A** and the Claude-tier half of **Part B** need the programme API
-> key (`compare_tiers_cli.py` calls Claude Code CLI); the consumer-app half of Part B (ChatGPT, Claude.ai, Gemini in a
-> browser, plus their privacy settings) has to be done by hand. Those sections are marked **[PENDING]**.
-> Commands: `README_DAY2.md`.
+Status: Parts C, D and E are done. Part A and the Claude half of Part B need the API key. The consumer app half of
+Part B (ChatGPT, Claude.ai and Gemini in the browser, plus their privacy settings) I have to do myself by hand.
+Those parts are marked [PENDING].
 
 ---
 
 ## Part A - Tier study [PENDING LIVE RUN]
 
-Commands: `python solutions/day2_models_and_embeddings/compare_tiers_cli.py --query Q1` (then `Q2`, `Q3`). Reports go to
-`outputs/tier_comparison_Q1.md`, `_Q2.md`, `_Q3.md`. Correctness is judged by me against the reference answers, not
-only by the automatic number check.
+Run `python solutions/day2_models_and_embeddings/compare_tiers_cli.py --query Q1`, then Q2 and Q3. I'll mark the
+answers myself against these, not just rely on the automatic number check.
 
-Reference answers used for marking:
-* **Q1** (vendor clause): credit for 98.6% availability = **620.00** (one full 0.5-point step x 5% x 12,400.00, under the
-  20% cap); termination after 8 months = **24,800.00** (two months' fees, inside the first 12 months); 3 marks.
-* **Q2** (2-sentence executive summary): must mention the 12,400.00 monthly fee, service credits capped at 20%, and the
-  early-termination charge; no invented terms; 2 sentences.
-* **Q3** (judgement, max 80 words): three real risks (personal data leaves our control / consumer terms and training
-  use / breach of data-protection law or client contract) and one safer alternative (enterprise tool or redacted /
-  synthetic data).
+- Q1 (vendor clause): the credit for 98.6% availability is 620.00 (one 0.5-point step x 5% x 12,400.00, which is
+  under the 20% cap). Terminating after 8 months costs 24,800.00 (two months' fees, since it's within the first
+  12 months). 3 marks.
+- Q2 (two-sentence summary): has to mention the 12,400.00 monthly fee, credits capped at 20%, and the early
+  termination charge, without making up any terms.
+- Q3 (judgement, 80 words max): three real risks (personal data leaving our control, consumer terms and training
+  use, breaking data-protection law or the client contract) and one safer option (an enterprise tool, or redacted
+  or synthetic data).
 
-| Query | Tier | Correct? (0-3) | Seconds | Cost ($) | Followed length limit? | Notes |
+| Query | Tier | Score (0-3) | Seconds | Cost ($) | Within length? | Notes |
 |---|---|---|---|---|---|---|
 | Q1 | opus | | | | | |
 | Q1 | sonnet | | | | | |
@@ -36,124 +34,117 @@ Reference answers used for marking:
 | Q3 | sonnet | | | | | |
 | Q3 | haiku | | | | | |
 
-**Recommendation per task type:** [PENDING - to be written from the table: tier for extraction with arithmetic,
-for summarisation, for judgement, with the evidence.]
+Which tier for which kind of task: [PENDING - after the runs]
 
 ---
 
 ## Part B - My own query across six tools
 
-**Query** (`solutions/day2_models_and_embeddings/data/own_query_term_deposit.txt`): about 150 words of synthetic
-term-deposit premature-closure terms (clauses 3.1-3.5 and a rate card) and three questions with known answers,
-written before running anything (`data/own_query_answers.md`):
+My query is in `solutions/day2_models_and_embeddings/data/own_query_term_deposit.txt`. It's about 150 words of
+made-up rules for closing a term deposit early (clauses 3.1-3.5 plus a rate card), followed by three questions. I
+wrote down my answers before running anything (`data/own_query_answers.md`):
 
-1. 200,000.00 booked for 2 years, closed after 120 days → **4.50%** (5.25% card rate for 91-180 days minus 0.75).
-   The trap: using the booked 2-year rate (6.75% → 6.00%), which clause 3.3 rules out.
-2. Take 50,000.00 out of 300,000.00 → **No**, partial withdrawal is not allowed (3.5).
-3. 600,000.00 closed on day 5 → **no interest** (3.2) and **branch manager** approval (3.4).
+1. 200,000.00 booked for 2 years and closed after 120 days: 4.50%. That's the 5.25% rate for 91-180 days minus the
+   0.75 penalty. The trap is using the 2-year rate instead (6.75% down to 6.00%), which clause 3.3 says not to do.
+2. Can you take 50,000.00 out of 300,000.00? No, partial withdrawals aren't allowed (3.5).
+3. 600,000.00 closed on day 5: no interest (3.2), and it needs the branch manager to approve (3.4).
 
-Redaction check: `redact_pii.py --file ...` found nothing (`outputs/day2_runs/partB_redaction_check.txt`). It only
-recognises patterns such as emails, phone and card numbers, so I also read the text myself: no names or personal data.
+I ran `redact_pii.py` on the file and it found nothing (`partB_redaction_check.txt`). It only looks for things like
+emails, phone numbers and card numbers, though, so I also read through the text myself. There are no names or
+personal details in it.
 
-**Claude tiers** [PENDING LIVE RUN]: `compare_tiers_cli.py --prompt "<contents of the file>"` →
-`outputs/tier_comparison_custom.md`.
+Claude tiers [PENDING LIVE RUN]: `compare_tiers_cli.py --prompt "<file contents>"`.
 
-**Consumer apps** [PENDING - to do by hand]: the lab's Q1 prompt (printed by `homework_pack.py`, saved in
-`outputs/day2_runs/partB_homework_pack.txt`) in ChatGPT, Claude.ai and Gemini, each in a **new chat** with identical
-text. Fill in `outputs/homework_comparison.md`: model and plan shown, correctness, length limit, time, anything added
-that is not in the source.
+Consumer apps [PENDING - by hand]: paste the lab's Q1 prompt (saved in `partB_homework_pack.txt`) into ChatGPT,
+Claude.ai and Gemini, in a new chat each time, using exactly the same text. Then fill in
+`outputs/homework_comparison.md`.
 
-**Training-data settings** [PENDING - check in each account and record what you actually see]:
+Training data settings [PENDING - check in each account]:
 
-| Tool | Where to look | Default I found | Account type (personal / enterprise) |
+| Tool | Where I looked | Default | Personal or enterprise |
 |---|---|---|---|
-| ChatGPT | Settings → Data controls → the "improve the model" toggle | | |
-| Claude.ai | Settings → Privacy → the "help improve Claude" setting | | |
-| Gemini | Gemini Apps Activity (activity / "keep activity") setting | | |
+| ChatGPT | Settings > Data controls > "Improve the model for everyone" | | |
+| Claude.ai | Settings > Privacy > "Help improve Claude" | | |
+| Gemini | Gemini Apps Activity | | |
 
-Menu names change often, so the "where to look" column is a starting point. Record the exact path and default you see.
+The menus move around, so I'll write down the actual path I find.
 
-**Trust analysis (8-12 sentences)** [PENDING - written after the runs].
+Trust analysis: [PENDING - after the runs]
 
 ---
 
 ## Part C - Embeddings experiment
 
-**New topic: `facilities`** - 8 synthetic office-facilities requests (broken air conditioning, meeting-room
-reservation, flickering light, faulty bike-gate lock, leaking water cooler, extra chairs, lift out of service, spare
-desk key) added to `data/sentences.json`.
+I added a `facilities` topic with 8 office requests: broken air conditioning, booking a meeting room, a flickering
+light, a faulty lock on the bike gate, a leaking water cooler, extra chairs, the lift being out of service, and a
+spare desk key.
 
-**Bug found and fixed first.** `plot_map()` paired topics with a 4-colour palette using `zip()`, which stops at the
-shorter list, so **a fifth topic was silently left off the map**: the data was embedded but never drawn. The palette
-now has 8 colours and the function raises an error instead of dropping topics if there are ever more.
+Before I could see it, I had to fix a bug. `plot_map()` matched topics to colours with `zip()`, but there were only
+4 colours, and `zip()` stops at the shorter list. So my fifth topic was being embedded but never drawn. I added more
+colours and made it raise an error if there are ever too many topics, instead of silently dropping them.
 
-**Toy vs real map.** Toy map: `outputs/embedding_map_toy.png` (log: `outputs/day2_runs/partC_toy.txt`). The real model
-(fastembed bge-small) could not run on this machine: the package is installed but `onnxruntime` fails to load its DLL
-(`DLL load failed while importing onnxruntime_pybind11_state`, the Microsoft Visual C++ runtime is missing), and the
-script falls back to the toy embedder (`outputs/day2_runs/partC_real_attempt.txt`). **[PENDING: real map once the
-runtime is installed, or on another machine.]** On the toy map the four original topics form tight groups, but
-`facilities` is **scattered**: some points sit among `refunds`, two sit near `hr_leave`, the rest in between. That is
-what the toy design predicts: none of its six word groups (money, delivery, damage, access, leave, security) is about
-buildings, so a facilities sentence is placed by the few group words it happens to contain ("broken", "faulty" →
-damage) plus small checksum "nudges" for every unknown word.
+The toy map is `outputs/embedding_map_toy.png`. I couldn't get the real model (fastembed bge-small) to run: it
+installs, but onnxruntime fails with "DLL load failed", because the Visual C++ runtime is missing on this laptop. So
+the script falls back to the toy embedder (`partC_real_attempt.txt`). [PENDING: real map.]
 
-**Where the toy embedder fails** (`--query`, a new option I added so you can try your own queries):
+On the toy map, the original four topics group together nicely, but facilities is scattered all over. Some points
+land in refunds, two near hr_leave, and the rest in between. That makes sense given how the toy works. It only has
+six word groups (money, delivery, damage, access, leave, security), and none of them are about buildings. So a
+facilities sentence is placed by whatever group words it happens to contain ("broken" and "faulty" count as damage)
+plus small random-ish nudges for the words it doesn't know.
 
-| Query | Toy top match | Why, in terms of the six word groups |
+Some queries where the toy gets it wrong (using the `--query` option I added):
+
+| Query | Toy's top match | Why |
 |---|---|---|
-| "Book a room for the team workshop" | `hr_leave` - "I need to **book** a holiday..." (0.99) | "book" is in the **leave** group, and nothing else in the query is in any group. The toy reads it as a leave request. A real model knows "book a room" is about space, not time off. |
-| "Reimburse me for the defective goods" (built-in) | `facilities` - "...the **faulty** lock on the bike storage gate" (0.96), refunds 2nd (0.90) | "defective" and "faulty" are both in the **damage** group; the facilities sentence has almost nothing else, so it points almost purely at "damage", as does half the query. Adding my topic changed the answer to an existing query. |
-| "The radiator by my seat is stone cold" | `facilities` - "We need six extra chairs..." (0.99) | Looks like a success, but it is luck: no word is in any group, so both vectors are made only of checksum nudges, and the "best match" is about chairs. |
+| "Book a room for the team workshop" | hr_leave, "I need to book a holiday..." (0.99) | "book" is in the leave group and no other word in the query is in any group, so it looks like a leave request. A real model would know booking a room is about space, not time off. |
+| "Reimburse me for the defective goods" (built-in) | facilities, "...the faulty lock on the bike storage gate" (0.96). Refunds came second (0.90). | "defective" and "faulty" are both in the damage group, and the facilities sentence has hardly anything else in it. So adding my topic changed the answer to a query that already existed. |
+| "The radiator by my seat is stone cold" | facilities, "We need six extra chairs..." (0.99) | Looks right but it's luck. None of the words are in any group, so both vectors are just nudges, and the match is about chairs. |
 
-**Test.** The course test that checked "Reimburse me for the defective goods" → refunds as the top hit now fails, for the
-reason above. I changed it to require refunds in the **top two**, with a comment explaining why, rather than editing my
-data to hide the effect. I added:
-`test_facilities_topic_added`; `test_toy_embedder_sends_a_room_booking_to_leave` (pins the documented failure);
-and `test_facilities_synonym_query_with_real_model`, the actual synonym check ("Book a room for the team workshop" →
-facilities). **It is skipped when fastembed cannot load**, as here. Why I did not write a toy-embedder synonym test for
-`facilities`: the toy has no facilities word group, so any toy "success" for a synonym query comes from checksum
-nudges (see the radiator row), and the test would pass or fail by accident, not because of meaning.
+That second query broke a course test, which expected refunds to come out on top. I changed it to "refunds in the
+top 2" and left a comment saying why, rather than tweaking my sentences to hide the problem. I also added a test that
+facilities is in the data, a test that records the room-booking failure, and the real synonym test ("Book a room..."
+should give facilities with the real model). That last one is skipped here because fastembed won't load. I didn't
+write a synonym test for the toy, because it has no facilities words, so it would pass or fail by luck.
 
-**What distance on the map means, and why the axes have no meaning.** Each sentence is really a point in 6
-dimensions (toy) or 384 (real model); the map squeezes them onto 2 axes with PCA, keeping the two directions in
-which the points differ most. Two dots close together therefore have similar vectors, so the embedder considers
-them similar in meaning, while dots far apart are less similar. But the squeeze loses information, so two points
-that look close in 2-D can still be far apart in the full space, and only the original cosine scores should be
-trusted. The axes are new directions that PCA calculates from *this* set of sentences: each is a weighted mix of all
-the original dimensions, and the mix changes as soon as you add or remove sentences (adding `facilities` changed the
-whole picture). So "axis 1" has no fixed meaning and no units; only the relative positions matter.
+What distance on the map means: each sentence is really a point in 6 dimensions (toy) or 384 (real model). PCA
+squashes that down to 2 axes, keeping the two directions where the points spread out the most. So dots that are
+close have similar vectors, which means the embedder thinks they're similar in meaning. But some information is lost
+in the squash, so two dots can look close on the map and still be far apart in the full space. The cosine scores are
+what to trust.
+
+The axes don't mean anything by themselves. Each one is a mix of all the original dimensions, worked out from this
+particular set of sentences, and the mix changes when you add or remove sentences. Adding facilities changed the
+whole picture. So there's no fixed meaning or unit for "axis 1"; only where the points are compared to each other
+matters.
 
 ---
 
 ## Part D - Extending the verification pipeline
 
-**New item:** `late_interest_pct_month` = **1.5** (clause 4.2), added to `EXTRACT_SYSTEM`, `ground_truth()`,
-`NUMBER_IN_QUOTE` and the offline reply (with a correct quote, so the demo's deliberate errors are still the only
-ones).
+I added `late_interest_pct_month` = 1.5 (clause 4.2) to `EXTRACT_SYSTEM`, `ground_truth()`, `NUMBER_IN_QUOTE` and the
+offline reply. I gave it a correct quote so that the demo's deliberate mistakes are still the only ones.
 
-**Three weaknesses found while adding it** (demonstrated on the unchanged code in
-`outputs/day2_runs/partD_weaknesses_before_fix.txt`):
+While adding it I found three problems. I recorded them on the original code first, in
+`partD_weaknesses_before_fix.txt`:
 
-1. **Rounding:** the number forms tried for 1.5 were `['1.5', '1.50', '2']`. The whole-number forms are now used only
-   for whole numbers.
-2. **Number inside another number:** "5" counted as found inside "interest at **1.5**% per month", so a quote from
-   the late-payment clause passed as evidence for the 5% service-credit step. The check now requires the number to
-   stand on its own (not preceded or followed by other digits).
-3. **Unsupported numbers did not raise the risk:** a real quote that does not contain the number set
-   `number_in_quote = False`, but `risk_tier()` ignored that field, so the run still came out **LOW**. It now gives
-   **HIGH** ("a quote is real but does not support its number").
+1. For 1.5 it was also looking for "2" (rounded). Now it only tries the rounded form for whole numbers.
+2. It found "5" inside "1.5% per month", so a quote about late interest counted as evidence for the 5% credit step.
+   Now the number has to stand on its own, with no other digits right before or after it.
+3. A real quote that didn't contain the number set `number_in_quote = False`, but `risk_tier()` never looked at
+   that, so the result was still LOW. Now it gives HIGH.
 
-**My extra check - quote must come from the right clause.** `SOURCE_CLAUSE` maps each item to its clause (fee → 4.1,
-interest → 4.2, credits → 7.1, termination → 9.2); `split_clauses()` cuts the contract at each clause number, and
-`verify()` adds `right_clause`. A real sentence from the wrong clause is not evidence, so it gives **HIGH**. The
-results table has a new "right clause" column.
+My extra check is that the quote has to come from the right clause. `SOURCE_CLAUSE` says which clause each item
+should come from (fee 4.1, interest 4.2, credits 7.1, termination 9.2). `split_clauses()` splits the contract at the
+clause numbers, and `verify()` adds a `right_clause` field. A real sentence from the wrong clause isn't evidence, so
+that gives HIGH. I also added a "right clause" column to the results table.
 
-**Tests** (`tests/test_day2.py`): new item correct → **LOW**; invented interest quote → **HIGH**; real quote but
-wrong number → **HIGH**; 1.5 never tried as "2"; "5" not found inside "1.5%" and "20" not inside "12,400.00"; real
-quote from the wrong clause → **HIGH**; unsupported number → **HIGH**; clauses split as 4.1/4.2/7.1/9.2/11.4.
-Day 2 suite: **28 tests, OK, 1 skipped** (the real-model embedding test).
+New tests: correct new item gives LOW. A made-up interest quote gives HIGH, and so does a real quote with the wrong
+number. 1.5 is never tried as "2". "5" isn't found inside "1.5%", and "20" isn't found inside "12,400.00". A quote
+from the wrong clause gives HIGH, an unsupported number gives HIGH, and the clauses split as
+4.1/4.2/7.1/9.2/11.4. Day 2 tests: 28 OK, 1 skipped.
 
-**Offline demo** (`outputs/day2_runs/partD_offline_demo.txt`):
+Offline demo (`partD_offline_demo.txt`):
 
 ```
 item                           model  expected  quote exists  right clause  number in quote  value ok
@@ -167,20 +158,20 @@ RISK TIER: HIGH
 ```
 Audit line: `{"source": "offline-demo", "tier": "HIGH", "failed_items": ["credit_cap_percent", "credit_for_98_6"]}`
 
-**Live mode** [PENDING LIVE RUN]: `python solutions/day2_models_and_embeddings/verify_outputs.py` → paste the table
-and the new audit line here.
+Live run: [PENDING LIVE RUN]
 
-**If the model had silently left out clause 9.2, what would catch it?** For the items we *ask* for, the pipeline
-already catches a missing item: `verify()` loops over the ground truth, so a missing `termination_charge_8m` fails
-with no quote and gives HIGH. The real gap is everything we did **not** think to ask for: if the task were "list
-every obligation" and the answer skipped 9.2, every check would pass, because the checks only look at what the model
-returned. **Proposed check - clause coverage:** `split_clauses()` already lists the clauses in the source (4.1, 4.2,
-7.1, 9.2, 11.4); require the model to cite a clause number for every statement, and flag any source clause that is
-cited by nothing as `UNCOVERED` (at least MEDIUM, so a person reads that clause). A missing clause is invisible to
-checks that only inspect the answer; it is only visible when you compare the answer against the full source.
+What if the model quietly left out clause 9.2? For things we ask for, it would already be caught. `verify()` goes
+through every expected item, so a missing `termination_charge_8m` has no quote and gives HIGH. The real gap is things
+we didn't think to ask about. If the task was "list every obligation" and the answer skipped 9.2, everything would
+pass, because the checks only look at what the model gave back.
+
+What I'd add is a coverage check. `split_clauses()` already knows which clauses exist (4.1, 4.2, 7.1, 9.2, 11.4). Make
+the model cite a clause number for each statement, and flag any clause nobody cited as UNCOVERED, at least MEDIUM, so
+someone goes and reads it. You can't spot a missing clause by looking only at the answer. You have to compare it
+against the full source.
 
 ---
 
-## Part E - Approved-tools guideline
+## Part E - Approved tools guideline
 
-See `docs/Approved_Tools_Guideline_DRAFT.md` (one page, clearly marked as a draft for Security and Legal review).
+See `docs/Approved_Tools_Guideline_DRAFT.md`.
