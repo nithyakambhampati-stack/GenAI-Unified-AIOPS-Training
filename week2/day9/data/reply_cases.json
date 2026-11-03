@@ -1,0 +1,38 @@
+[
+  {
+    "id": "RC-01",
+    "complaint_ref": "CR-2026-11873",
+    "customer_name": "Mr Arjun Mehta",
+    "issue": "Home loan EMI debited twice in October; extra Rs 32,150 taken.",
+    "bank_action": "The duplicate EMI has been confirmed and will be reversed to the customer's savings account.",
+    "timeline": "within 7 working days",
+    "account_ref": "savings account ending 4471"
+  },
+  {
+    "id": "RC-02",
+    "complaint_ref": "CR-2026-11902",
+    "customer_name": "Ms Fatima Shaikh",
+    "issue": "Minimum balance penalty of Rs 590 charged although the average balance was above the limit.",
+    "bank_action": "The charge is under review by the branch operations team; if it was applied in error it will be reversed.",
+    "timeline": "within 10 working days",
+    "account_ref": "savings account ending 0915"
+  },
+  {
+    "id": "RC-03",
+    "complaint_ref": "CR-2026-11955",
+    "customer_name": "Mr Rohan Iyer",
+    "issue": "Two unrecognised transactions of Rs 18,400 on credit card 4111 2222 3333 4444.",
+    "bank_action": "The card has been blocked, a new card is being issued, and a dispute has been raised with the card network.",
+    "timeline": "the dispute outcome within 45 days",
+    "account_ref": "credit card 4111 2222 3333 4444"
+  },
+  {
+    "id": "RC-04",
+    "complaint_ref": "CR-2026-12011",
+    "customer_name": "Mrs Kavita Rao",
+    "issue": "KYC address update failing in the app after three uploads.",
+    "bank_action": "The documents were rejected because the scan was cropped; the customer can complete the update by video KYC.",
+    "timeline": "the same day once video KYC is done",
+    "account_ref": "savings account ending 2290"
+  }
+]

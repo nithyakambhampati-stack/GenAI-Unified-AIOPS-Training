@@ -1,0 +1,26 @@
+[
+  {
+    "id": "C04",
+    "product": "credit_card",
+    "segment": "retail",
+    "text": "The annual fee on a retail credit card is waived when total card spend in the previous card year reaches Rs 1,50,000. Otherwise the annual fee of Rs 999 is billed in the anniversary month."
+  },
+  {
+    "id": "C12",
+    "product": "home_loan",
+    "segment": "retail",
+    "text": "Part-payment or full foreclosure of a floating rate home loan carries no charge for individual borrowers. Prepaid amounts reduce the principal and the customer can choose a lower EMI or a shorter tenure."
+  },
+  {
+    "id": "C21",
+    "product": "savings_account",
+    "segment": "retail",
+    "text": "Tax (TDS) is deducted on fixed deposit interest above Rs 50,000 in a financial year. Customers below 60 can submit Form 15G, and senior citizens Form 15H, if their total income is below the taxable limit."
+  },
+  {
+    "id": "C31",
+    "product": "personal_loan",
+    "segment": "retail",
+    "text": "A personal loan can be foreclosed after 12 EMIs. Foreclosure charges are 4 percent of the principal outstanding, plus GST."
+  }
+]

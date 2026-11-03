@@ -1,0 +1,13 @@
+{
+  "runner": "claude",
+  "repeats": 3,
+  "timeout_seconds": 180,
+  "allowed_categories": ["card_fraud", "card_declined", "loan_emi", "fees_and_charges", "kyc_update", "other"],
+  "severities": ["low", "medium", "high"],
+  "reply": {
+    "word_limit": 120,
+    "forbidden_phrases": ["guarantee", "we promise", "100%", "will definitely", "rest assured"]
+  },
+  "summary_fields": ["one_line_answer", "fee_or_limit", "applies_to", "source_id"],
+  "priorities": ["compliance", "accuracy", "brevity"]
+}

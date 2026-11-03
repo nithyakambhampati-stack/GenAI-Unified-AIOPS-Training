@@ -1,0 +1,92 @@
+[
+  {
+    "id": "CMP-01",
+    "text": "There are two transactions of Rs 18,400 on my credit card from an online electronics store in Singapore. I never made them and my card is with me.",
+    "label": {
+      "category": "card_fraud",
+      "severity": "high",
+      "escalate": true
+    }
+  },
+  {
+    "id": "CMP-02",
+    "text": "My debit card was declined at a petrol pump yesterday even though I have enough balance in my savings account.",
+    "label": {
+      "category": "card_declined",
+      "severity": "low",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-03",
+    "text": "My home loan EMI was debited twice this month. Please return the extra Rs 32,150 urgently, my rent is due.",
+    "label": {
+      "category": "loan_emi",
+      "severity": "high",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-05",
+    "text": "Rs 590 was charged as minimum balance penalty but my average balance was above the limit for the whole month.",
+    "label": {
+      "category": "fees_and_charges",
+      "severity": "medium",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-04",
+    "text": "I uploaded my new address proof three times but the app keeps saying my KYC update failed.",
+    "label": {
+      "category": "kyc_update",
+      "severity": "medium",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-06",
+    "text": "I raised a complaint 35 days ago about a wrong late fee and nobody has replied. I will go to the Banking Ombudsman.",
+    "label": {
+      "category": "fees_and_charges",
+      "severity": "High",
+      "escalate": true
+    }
+  },
+  {
+    "id": "CMP-07",
+    "text": "Someone called pretending to be from the bank, I shared an OTP and now Rs 9,999 is gone from my account.",
+    "label": {
+      "category": "card_fraud",
+      "severity": "high",
+      "escalate": true
+    }
+  },
+  {
+    "id": "CMP-08",
+    "text": "My personal loan EMI date moved from the 5th to the 10th without anyone telling me.",
+    "label": {
+      "category": "loan_emi",
+      "severity": "low",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-09",
+    "text": "Can you tell me the timings of the Hazratganj branch on Saturdays?",
+    "label": {
+      "category": "other",
+      "severity": "low",
+      "escalate": false
+    }
+  },
+  {
+    "id": "CMP-10",
+    "text": "My credit card does not work on international websites even after I enabled overseas usage in the app.",
+    "label": {
+      "category": "card_declined",
+      "severity": "medium",
+      "escalate": false
+    }
+  }
+]

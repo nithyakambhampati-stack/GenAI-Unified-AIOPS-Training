@@ -1,0 +1,8 @@
+{
+  "S1": {"context": false, "constraints": false, "priority": false, "output": false, "shots": "zero-shot", "role": false, "persona": false},
+  "S2": {"context": true, "constraints": false, "priority": false, "output": true, "shots": "zero-shot", "role": true, "persona": false},
+  "S3": {"context": true, "constraints": true, "priority": false, "output": true, "shots": "few-shot", "role": false, "persona": false},
+  "S4": {"context": false, "constraints": true, "priority": true, "output": true, "shots": "zero-shot", "role": false, "persona": true},
+  "S5": {"context": false, "constraints": false, "priority": false, "output": false, "shots": "one-shot", "role": true, "persona": false},
+  "S6": {"context": false, "constraints": false, "priority": true, "output": true, "shots": "few-shot", "role": false, "persona": false}
+}

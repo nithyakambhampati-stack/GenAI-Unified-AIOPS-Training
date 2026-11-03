@@ -1,0 +1,34 @@
+[
+  {
+    "text": "A Rs 1,200 annual fee was charged on my card even though I spent more than the waiver limit.",
+    "label": {
+      "category": "fees_and_charges",
+      "severity": "low",
+      "escalate": false
+    }
+  },
+  {
+    "text": "There is a Rs 4,500 transaction at a hotel in Goa on my credit card that I did not make.",
+    "label": {
+      "category": "card_fraud",
+      "severity": "low",
+      "escalate": false
+    }
+  },
+  {
+    "text": "Someone called pretending to be from the bank, I shared an OTP and now Rs 9,999 is gone from my account.",
+    "label": {
+      "category": "card_fraud",
+      "severity": "high",
+      "escalate": true
+    }
+  },
+  {
+    "text": "Please update my mobile number, I changed my SIM last week.",
+    "label": {
+      "category": "kyc_update",
+      "severity": "low",
+      "escalate": false
+    }
+  }
+]
