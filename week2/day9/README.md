@@ -32,7 +32,7 @@ Placeholders in a prompt: `{{INPUT}}` is replaced by the case, `{{EXAMPLES}}` by
 ```
 python -m unittest discover -s tests                 # tests
 python check_by_hand.py                              # compare by_hand/my_answers.json with the linter
-python prompt_lint.py prompts/weak/*.md              # which ingredients does each prompt have?
+python prompt_lint.py prompts/weak/t1_classify.md prompts/weak/t2_reply.md prompts/weak/t3_summary.md  # which ingredients does each prompt have?
 python runner.py --task t1 --variant weak            # run a prompt over every case
 python compare.py                                    # before/after scores, writes output/
 ```
