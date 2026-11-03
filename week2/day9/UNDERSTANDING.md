@@ -1,72 +1,119 @@
 # Day 9 Assignment Understanding
 
-## Purpose
+## 1. What the Assignment Asked
 
-This lab improves three unreliable prompts used by a retail bank complaint desk. The goal is to make each prompt explicit, testable, and aligned with the Good-Prompt Formula, then compare the weak and improved versions.
+The bank complaint desk had three weak prompts whose outputs were unreliable. The assignment was to:
 
-All case data is synthetic. Before a case is sent to a model, card and account numbers are masked so that only the last four digits remain visible.
+1. Read the weak prompts and the synthetic input data.
+2. Rewrite the prompts using the Good-Prompt Formula.
+3. Implement a strict prompt linter.
+4. Score weak and improved outputs.
+5. Complete the worksheet and add tests proving the work.
+6. Document the results.
 
-## Good-Prompt Formula
+The three tasks are complaint classification, customer-reply drafting, and policy summarization.
 
-Every improved prompt has four markdown sections:
+## 2. How the Files Were Created
 
-- **Context** explains who uses the answer, what task is being performed, and what the input contains.
-- **Constraints** states rules that must not be broken, including allowed values, limits, privacy rules, and grounding requirements.
-- **Priority** states what wins when rules conflict. The desk uses compliance first, accuracy second, and brevity third.
-- **Output** defines the exact response format.
+The starter folder already contained the weak prompts, data, runner, checker skeletons, worksheet, and tests. The missing files and incomplete functions were identified from `MISSING_PIECES.md`.
 
-The linter is intentionally strict. A section counts only when its name appears in a markdown heading and has real non-comment content before the next heading.
+The work was completed in these stages:
 
-## Prompt Strategies
+1. Read `README.md`, `MISSING_PIECES.md`, the worksheet, configuration, data, and existing tests.
+2. Copied the prompt template into three improved prompt files and replaced the template comments with task-specific instructions.
+3. Implemented `lint()` in `prompt_lint.py` according to its docstring.
+4. Implemented `main()` in `compare.py` to read saved outputs, score them, print a table, and write CSV/Markdown reports.
+5. Completed `by_hand/my_answers.json` using the strict linter rules.
+6. Added `tests/test_lab.py` for the worksheet, improved prompts, fixed checks, and data hygiene.
+7. Corrected discovered inconsistencies in configuration, test data, placeholders, and scoring logic.
+8. Added this understanding document and copied the completed assignment to the GitHub repository under `week2/day9`.
 
-### t1: Complaint classification
+## 3. How Each Prompt Was Modified
 
-`prompts/improved/t1_classify.md` uses few-shot prompting. The runner inserts examples from `data/fewshot_examples.json` into `{{EXAMPLES}}`, then inserts one complaint into `{{INPUT}}`. The model must return only JSON containing `category`, `severity`, and `escalate`.
+### t1: Complaint Classification
 
-Examples make the classification labels concrete and reduce ambiguity around fraud, severity, and escalation decisions.
+File: `prompts/improved/t1_classify.md`
 
-### t2: Customer reply
+Strategy: **few-shot prompting**.
 
-`prompts/improved/t2_reply.md` uses a role and persona. The assistant acts as a retail bank complaint-desk officer with the persona of Asha, a calm, precise, and empathetic senior customer care officer. The reply must be no more than 120 words, include the complaint reference and timeline, avoid forbidden certainty phrases, and never expose a full card or account number.
+- Context identifies the complaint desk, the classification task, and the complaint input.
+- Constraints list the allowed categories, severities, escalation rule, JSON requirement, and no-invention rule.
+- Priority states compliance first, accuracy second, and brevity third.
+- Output requires only JSON with `category`, `severity`, and `escalate`.
+- `{{EXAMPLES}}` receives examples from `data/fewshot_examples.json`.
+- `{{INPUT}}` receives the current complaint from `data/complaints.json`.
 
-### t3: Policy summary
+The examples show the model what the expected labels look like and make similar categories easier to distinguish.
 
-`prompts/improved/t3_summary.md` uses zero-shot prompting with a strict JSON contract. The model must summarize only the supplied policy text and return `one_line_answer`, `fee_or_limit`, `applies_to`, and `source_id`. All numbers in the response must come from the policy text.
+### t2: Customer Reply
 
-## Scoring
+File: `prompts/improved/t2_reply.md`
 
-The checks in `checks.py` score each model output by boolean checks:
+Strategy: **role plus persona**.
 
-- **t1:** valid JSON, allowed category, correct category, severity, and escalation value.
+- The role is a retail bank complaint-desk officer.
+- The persona is Asha, a calm, precise, and empathetic senior customer-care officer.
+- Constraints enforce the 120-word limit, complaint reference, timeline, privacy protection, forbidden phrases, and no invented commitments.
+- Priority again places compliance before accuracy and brevity.
+- Output requires only the customer-facing reply and requires the complaint reference at the end.
+- `{{INPUT}}` receives the reply case, including the bank action and timeline.
+
+This makes the reply both professional and operationally complete without exposing sensitive numbers.
+
+### t3: Policy Summary
+
+File: `prompts/improved/t3_summary.md`
+
+Strategy: **zero-shot with strict output**.
+
+- Context identifies the bank agent and says that only the supplied policy may be used.
+- Constraints prohibit invented facts and numbers and require the source id to be copied.
+- Priority is compliance, accuracy, then brevity.
+- Output requires valid JSON with `one_line_answer`, `fee_or_limit`, `applies_to`, and `source_id`.
+- `{{INPUT}}` receives one policy snippet and its metadata.
+
+The strict contract makes the summary easy to validate automatically.
+
+## 4. How the Assignment Was Tested
+
+The linter checks whether each ingredient has its own markdown heading with real content. It also detects shot type, role, persona, and the four-ingredient score.
+
+The output checks work as follows:
+
+- **t1:** valid JSON, allowed category, matching category, matching severity, and matching escalation.
 - **t2:** word limit, no forbidden phrase, complaint reference, timeline, and no full card number.
-- **t3:** valid JSON, required fields, correct source id, and grounded numbers.
+- **t3:** valid JSON, required fields, correct source id, and numbers grounded in the policy text.
 
-The score for one case is the fraction of checks that pass. `compare.py` averages these scores by task and prompt variant and writes `output/comparison.csv` and `output/comparison.md`.
+The runner masks card and account numbers before creating prompts. The comparison script reads output files from both variants and writes:
 
-## Completed Work
+- `output/comparison.csv`: one row for each task, variant, case, and run.
+- `output/comparison.md`: average before/after scores and lint scores.
 
-- Added all three improved prompts.
-- Implemented the strict prompt linter.
-- Implemented comparison scoring and report generation.
-- Fixed data/config inconsistencies: repeat count, priority order, allowed category, duplicate complaint id, and misleading few-shot label.
-- Made classification checks case-insensitive as documented.
-- Normalized comma-formatted numbers without treating digits inside identifiers such as `C31` as policy numbers.
-- Completed the six worksheet answers.
-- Added regression and data-hygiene tests in `tests/test_lab.py`.
+## 5. Problems Found and Fixed
 
-## Verification
+- Changed `repeats` from 1 to 3 to match the assignment instructions.
+- Corrected configuration priority to compliance, accuracy, brevity.
+- Added `fees_and_charges` to the allowed categories.
+- Renamed the duplicate complaint id `CMP-04` to `CMP-05` so output files cannot overwrite each other.
+- Corrected a misleading few-shot card-fraud example.
+- Made category and severity comparisons case-insensitive as promised by the checker documentation.
+- Normalized comma-formatted numbers and prevented digits inside identifiers such as `C31` from being counted as policy numbers.
+- Corrected the weak t3 placeholder from `{{TEXT}}` to the documented `{{INPUT}}`.
 
-Run:
+## 6. Results
 
-```text
-python -m unittest discover -s tests
-python check_by_hand.py
-python prompt_lint.py
-python compare.py
-```
+The final verification produced these results:
 
-The test suite currently passes all 20 tests, and all 42 worksheet answers match the linter. The comparison report records missing model outputs until weak and improved runs are generated through Claude Code or manual mode.
+- **20 tests passed** with `python -m unittest discover -s tests`.
+- **42 of 42 worksheet answers matched** with `python check_by_hand.py`.
+- All three improved prompts lint at **4/4**.
+- t1 is detected as few-shot; t2 is detected as role plus persona; t3 is detected as zero-shot.
+- `output/comparison.csv` and `output/comparison.md` were generated successfully.
 
-## Repository Status
+The comparison scores are currently `0.000` for both weak and improved variants because no Claude Code or manual model-output files were available at test time. The comparison report records those outputs as missing rather than pretending that model runs occurred. After outputs are generated, running `python compare.py` will calculate the real before/after scores.
 
-This folder is the complete Day 9 assignment. It is ready to be reviewed before publishing to GitHub, and later to GitLab after confirmation.
+## 7. Published Location
+
+The completed assignment and this document were pushed to:
+
+`week2/day9` in [GenAI-Unified-AIOPS-Training](https://github.com/nithyakambhampati-stack/GenAI-Unified-AIOPS-Training/tree/main/week2/day9)
