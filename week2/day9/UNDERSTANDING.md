@@ -27,6 +27,7 @@ The work was completed in these stages:
 6. Added `tests/test_lab.py` for the worksheet, improved prompts, fixed checks, and data hygiene.
 7. Corrected discovered inconsistencies in configuration, test data, placeholders, and scoring logic.
 8. Added this understanding document and copied the completed assignment to the GitHub repository under `week2/day9`.
+9. Added `SUBMISSION_NOTES.md` to document the individual design choices in this variant.
 
 ## 3. How Each Prompt Was Modified
 
