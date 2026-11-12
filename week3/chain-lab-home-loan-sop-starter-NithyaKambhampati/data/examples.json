@@ -1,0 +1,10 @@
+[
+ {
+  "question": "Within how many working days is the foreclosure statement issued?",
+  "answer_json": "{\"answer\": \"Within 3 working days of the written request.\", \"citations\": [{\"section\": \"S3.1\", \"quote\": \"The foreclosure statement is issued within 3 working days of the request.\"}], \"confidence\": \"high\"}"
+ },
+ {
+  "question": "How many branches does the bank have?",
+  "answer_json": "{\"answer\": \"Not found in the document.\", \"citations\": [], \"confidence\": \"low\"}"
+ }
+]

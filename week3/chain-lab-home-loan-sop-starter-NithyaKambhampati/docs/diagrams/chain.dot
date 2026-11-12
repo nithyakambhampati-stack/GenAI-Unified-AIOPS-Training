@@ -1,0 +1,4 @@
+digraph G { rankdir=TB; graph [fontname=Arial,dpi=150,pad=0.2,nodesep=0.35,ranksep=0.5]; node [shape=box,style="rounded,filled",fillcolor="#DCE6F2",color="#1F3864",fontname=Arial,fontsize=18]; edge [color="#1F3864",fontname=Arial,fontsize=14];
+ rankdir=LR; node [fontsize=16];
+ a [label="Question"]; b [label="GUARD\nclean the text"]; c [label="RETRIEVE\n3 best sections"]; d [label="EXTRACT\nJSON answer\n+ citations"]; e [label="VERIFY\nquotes real?"]; f [label="RENDER\nmarkdown",fillcolor="#E2EFDA"]; g [label="REFINE\nretry with\nfeedback",fillcolor="#FFE699"]; h [label="Needs human\nreview",fillcolor="#F8CBAD"];
+ a->b->c->d->e; e->f [label="ok"]; e->g [label="problem"]; g->d [label="once"]; g->h [label="still bad",style=dashed]; }

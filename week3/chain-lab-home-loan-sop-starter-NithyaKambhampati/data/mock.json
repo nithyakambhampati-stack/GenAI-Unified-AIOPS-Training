@@ -1,0 +1,6 @@
+{
+ "canaries": [
+  "WAIVE-7731",
+  "CONFIRM-5520"
+ ]
+}
