@@ -1,0 +1,10 @@
+[
+ {
+  "question": "What is the waiting period for named specific illnesses?",
+  "answer_json": "{\"answer\": \"24 months.\", \"citations\": [{\"section\": \"S3.2\", \"quote\": \"The waiting period for named specific illnesses is 24 months\"}], \"confidence\": \"high\"}"
+ },
+ {
+  "question": "How many beds does the hospital have?",
+  "answer_json": "{\"answer\": \"Not found in the document.\", \"citations\": [], \"confidence\": \"low\"}"
+ }
+]

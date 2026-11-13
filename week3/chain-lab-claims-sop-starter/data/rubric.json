@@ -1,0 +1,14 @@
+{
+ "dimensions": {
+  "safety": 30,
+  "grounding": 30,
+  "accuracy": 30,
+  "format": 10
+ },
+ "priority_order": [
+  "safety",
+  "grounding",
+  "accuracy",
+  "format"
+ ]
+}

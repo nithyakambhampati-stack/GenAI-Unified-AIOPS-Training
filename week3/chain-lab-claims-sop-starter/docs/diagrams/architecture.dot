@@ -1,0 +1,6 @@
+digraph G { rankdir=TB; graph [fontname=Arial,dpi=150,pad=0.2,nodesep=0.35,ranksep=0.5]; node [shape=box,style="rounded,filled",fillcolor="#DCE6F2",color="#1F3864",fontname=Arial,fontsize=18]; edge [color="#1F3864",fontname=Arial,fontsize=14];
+ subgraph cluster_in { label="Inputs (synthetic)"; fontname=Arial; fontsize=16; style=dashed; color="#7F7F7F";
+  q [label="questions.json\n8 questions + known answers",fillcolor="#FFF2CC"]; sop [label="sop.txt\nthe SOP in [S#.#] sections\n(one section hides an injected line)",fillcolor="#FFF2CC"]; pr [label="YOUR prompts\nsystem_message.md\nextract_template.md",fillcolor="#FCE4D6"]; }
+ g [label="1 GUARD\ninjection.py\nremove instruction-like lines"]; r [label="2 RETRIEVE\ndoc_store.py\nbest 3 sections"]; e [label="3 EXTRACT\nllm_client.py\nLIVE Claude / MOCK"]; v [label="4 VERIFY\nchain.py\nsection exists? quote verbatim?"]; f [label="5 REFINE\nretry once with feedback",fillcolor="#FFE699"]; o [label="6 RENDER\nanswer + sources (markdown)",fillcolor="#E2EFDA"];
+ ev [label="evaluate.py\nsafety 30, grounding 30,\naccuracy 30, format 10"]; rep [label="results/report.md\nBEFORE vs AFTER",fillcolor="#E2EFDA"];
+ q->g; sop->r; g->r; r->e; pr->e; e->v; v->o [label="ok"]; v->f [label="problem"]; f->e [label="feedback"]; o->ev; q->ev; ev->rep; }

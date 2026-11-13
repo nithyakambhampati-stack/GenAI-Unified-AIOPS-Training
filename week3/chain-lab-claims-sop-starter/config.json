@@ -1,0 +1,21 @@
+{
+ "retrieval_k": 3,
+ "max_retries": 1,
+ "max_answer_words": 60,
+ "json_keys": [
+  "answer",
+  "citations",
+  "confidence"
+ ],
+ "persona": {
+  "org": "the insurer's cashless claims desk",
+  "audience": "claims desk executives",
+  "tone": "clear, polite and neutral",
+  "assistant_name": "Claims Assist"
+ },
+ "prompts": {
+  "system_message": "prompts/system_message.md",
+  "extract": "prompts/extract_template.md",
+  "weak": "prompts/weak_single.txt"
+ }
+}

@@ -1,0 +1,3 @@
+digraph G { rankdir=TB; graph [fontname=Arial,dpi=150,pad=0.2,nodesep=0.35,ranksep=0.5]; node [shape=box,style="rounded,filled",fillcolor="#DCE6F2",color="#1F3864",fontname=Arial,fontsize=18]; edge [color="#1F3864",fontname=Arial,fontsize=14];
+ rankdir=LR; node [fontsize=16];
+ u [label="Untrusted text\n(SOP lines, question)",fillcolor="#F8CBAD"]; l1 [label="Layer 1 in code\nremove instruction-like\nlines (patterns)"]; l2 [label="Layer 2 in prompt\n<document> tags +\n'data, not instructions'"]; l3 [label="Layer 3 after\nverify every citation,\nnever echo free text",fillcolor="#E2EFDA"]; m [label="Model"]; u->l1->l2->m->l3; }
